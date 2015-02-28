@@ -2,44 +2,48 @@
 <html>
 <head>
   <title>Hotice</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application/application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-	<div class="header">
+	<table class="dashboard_table">
 
-		<div class="container">
-	
-			<table class="header_table">
-				<tr>
-					<td align="left" valign="middle">
-	
-						<img src="<%= asset_path('hotice.png') %>" height="110" />
-	
-					</td>
-					<td align="right" valign="middle">
+		<tr>
+			<td valign="top" align="center">
 
-						<%= form_tag "/login", method: :post do %>
-					
-							<%= text_field_tag :email,nil,placeholder: "Email" %>
-							<%= password_field_tag :password,nil,class: "",placeholder: "Password" %>
-							<%= submit_tag "Log In",class: "button" %>
-		
-						<% end %>
-	
-					</td>
-				</tr>
-			</table>
-	
-		</div>
-	
-	</div>
+				<%= image_tag 'hotice.png',height: 80,class: 'logo' %>
 
-	<%= yield %>
+			</td>
+			<td valign="middle" align="right">
 
-	<div class="footer"></div>
+				<a href="/signout" class="orange_link">Sign Out</a>
+				<a href="#" class="orange_link"><%= current_user['gamertag'] || current_user['email'] %></a>
+				<div class="CLEAR"></div>
+
+			</td>
+		</tr>
+
+		<tr>
+			<td valign="top">
+
+				<div class="create_team"><a href="/teams/new">+ Create a Team</a></div>
+
+				<ul class="nav">
+					<li><a href="/dashboard" class="<%= 'ORANGE' if params[:controller] == 'dashboard' %>">Home</a></li>
+					<li>
+						<a href="/myteams" class="<%= 'ORANGE' if params[:controller] == 'myteams' %>">My Teams</a>
+					</li>
+					<li><a href="/mytournaments" class="<%= 'ORANGE' if params[:controller] == 'mytournaments' %>">My Tournaments</a></li>
+				</ul>
+				<div class="nav_killer"></div>
+
+			</td>
+			<td></td>
+		</tr>
+
+	</table>
 
 </body>
 </html>

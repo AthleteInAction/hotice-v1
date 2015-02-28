@@ -4,27 +4,55 @@ class SplashController < ApplicationController
 
 		@errors = {}
 
-		# users_query = Parse::Query.new '_User'
-		# users_query.eq("objectId", "EvIBRX0Qds")
-		# users = users_query.get
-
-		# render json: users
+		if session[:user]
+			redirect_to '/dashboard'
+		else
+			render 'index',layout: 'splash'
+		end
 
 	end
 
 	def create
 
-		call = dev_db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
+		if params[:login] == 'true'
 
-		if call[:code] == 201
+			call = dev_db.APICall path: '/login',method: 'GET',username: params[:email],password: params[:password]
 
-			render json: call[:body],status: call[:code]
+			if call[:code] == 200
+
+				session[:user] = {
+					username: call[:body]['username'],
+					email: call[:body]['email'],
+					gamertag: call[:body]['gamertag'],
+					objectId: call[:body]['objectId'],
+					sessionToken: call[:body]['sessionToken']
+				}
+
+				redirect_to root_url
+	
+			else
+	
+				@errors = call[:body]
+	
+				render json: @errors
+	
+			end
 
 		else
 
-			@errors = call[:body]
+			call = dev_db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
 
-			render 'index'
+			if call[:code] == 201
+	
+				render json: call[:body],status: call[:code]
+	
+			else
+	
+				@errors = call[:body]
+	
+				render 'index',layout: 'splash'
+	
+			end
 
 		end
 

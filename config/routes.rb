@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   root 'splash#index'
 
   resources :users
+  resources :sessions
 
   post '/', to: 'splash#create'
 
-  get '/signin', to: 'sessions#index'
-  post '/signin', to: 'sessions#signin'
+  get '/dashboard', to: 'dashboard#index'
+
+  get '/signout', to: 'sessions#destroy'
 
 end

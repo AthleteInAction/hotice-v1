@@ -1,14 +1,10 @@
 class SessionsController < ApplicationController
 
-	def index
+	def destroy
 
+		session[:user] = nil
 
-
-	end
-
-	def create
-
-
+		redirect_to root_url
 
 	end
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hotice</title>
+  <%= stylesheet_link_tag    'splash/splash', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<div class="splash_header">
+
+		<div class="container">
+	
+			<table class="splash_header_table">
+				<tr>
+					<td align="left" valign="middle">
+	
+						<img src="<%= asset_path('hotice.png') %>" height="110" />
+	
+					</td>
+					<td align="right" valign="middle">
+
+						<%= form_tag "/", method: :post do %>
+							
+							<%= hidden_field_tag :login,nil,value: 'true' %>
+							<%= text_field_tag :email,nil,placeholder: "Email" %>
+							<%= password_field_tag :password,nil,class: "",placeholder: "Password" %>
+							<%= submit_tag "Log In",class: "button" %>
+		
+						<% end %>
+	
+					</td>
+				</tr>
+			</table>
+	
+		</div>
+	
+	</div>
+
+	<%= yield %>
+
+	<div class="splash_footer"></div>
+
+</body>
+</html>

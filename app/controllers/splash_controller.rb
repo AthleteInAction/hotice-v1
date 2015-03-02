@@ -43,8 +43,16 @@ class SplashController < ApplicationController
 			call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
 
 			if call[:code] == 201
-	
-				render json: call[:body],status: call[:code]
+				
+				session[:user] = {
+					username: params['email'],
+					email: params['email'],
+					gamertag: params['gamertag'],
+					objectId: call[:body]['objectId'],
+					sessionToken: call[:body]['sessionToken']
+				}
+
+				redirect_to '/dashboard/'
 	
 			else
 	

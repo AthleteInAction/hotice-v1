@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body ng:App="HotIce">
 
 	<table class="dashboard_table">
 
@@ -28,10 +28,10 @@
 		<tr>
 			<td valign="top">
 
-				<div class="create_team"><a href="/teams/new">+ Create a Team</a></div>
+				<div class="create_team"><a href="/dashboard/#/teams/new">+ Create a Team</a></div>
 
 				<ul class="nav">
-					<li><a href="/dashboard" class="<%= 'ORANGE' if params[:controller] == 'dashboard' %>">Home</a></li>
+					<li><a href="/dashboard/#/" class="<%= 'ORANGE' if params[:controller] == 'dashboard' %>">Home</a></li>
 					<li>
 						<a href="/myteams" class="<%= 'ORANGE' if params[:controller] == 'myteams' %>">My Teams</a>
 					</li>
@@ -40,7 +40,11 @@
 				<div class="nav_killer"></div>
 
 			</td>
-			<td></td>
+			<td valign="top">
+
+				<div ng:view></div>
+
+			</td>
 		</tr>
 
 	</table>

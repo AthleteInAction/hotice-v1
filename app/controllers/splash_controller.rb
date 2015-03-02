@@ -5,7 +5,7 @@ class SplashController < ApplicationController
 		@errors = {}
 
 		if session[:user]
-			redirect_to '/dashboard'
+			redirect_to '/dashboard/'
 		else
 			render 'index',layout: 'splash'
 		end

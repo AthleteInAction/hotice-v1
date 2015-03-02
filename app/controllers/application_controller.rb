@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def db
-    ParseAPI::Connect.new application_id: APP_ID,rest_key: REST_KEY
+    result = ParseAPI::Connect.new application_id: APP_ID,rest_key: REST_KEY
   end
   helper_method :db
 

@@ -16,7 +16,7 @@ class SplashController < ApplicationController
 
 		if params[:login] == 'true'
 
-			call = dev_db.APICall path: '/login',method: 'GET',username: params[:email],password: params[:password]
+			call = db.APICall path: '/login',method: 'GET',username: params[:email],password: params[:password]
 
 			if call[:code] == 200
 
@@ -40,7 +40,7 @@ class SplashController < ApplicationController
 
 		else
 
-			call = dev_db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
+			call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
 
 			if call[:code] == 201
 	

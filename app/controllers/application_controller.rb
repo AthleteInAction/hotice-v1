@@ -4,12 +4,16 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  require 'ParseAPI'
+
+  # puts "\n\nXXXXXXXXXXXXXXXXXXXXX\n\nXXXXXXXXXXXXXXXXXXXXXXXXX\n\n"
+
   private
 
-  def dev_db
-    result = ParseAPI::Connect.new application_id: 'pTgNnmnQSpIeZrFHrzWhdEHBsQpUJPiiFemsbUme',rest_key: 'X4YzW6g7pAq60pJCTAsQ3lfyOEQuEl1yznPLgixr'
+  def db
+    ParseAPI::Connect.new application_id: APP_ID,rest_key: REST_KEY
   end
-  helper_method :dev_db
+  helper_method :db
 
   def current_user
     session[:user]
@@ -17,7 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
-    redirect_to login_url, alert: "Not authorized" if session[:user].nil?
+    redirect_to root_url, alert: "Not authorized" if session[:user].nil?
   end
 
 end

@@ -1,0 +1,3 @@
+class SsoController < ApplicationController
+
+end

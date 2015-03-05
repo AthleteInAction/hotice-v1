@@ -67,9 +67,16 @@ table {
 }
 
 table.radio tr td {
+	vertical-align: middle;
+	text-align: left;
 	background: none;
-	width: inherit;
 	margin: 0;
-	padding: 0;
+	padding: 10px;
 	border: none;
+}
+table.radio tr td:first-child {
+	width: 1px;
+}
+table.radio tr td:last-child {
+	padding-top: 15px;
 }

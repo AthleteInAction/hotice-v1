@@ -28,7 +28,15 @@ class SplashController < ApplicationController
 					sessionToken: call[:body]['sessionToken']
 				}
 
-				redirect_to root_url
+				if params[:zendesk] == 'true'
+
+					redirect_to "/api/v1/sso/zendesk?return_to=#{ params[:return_to]}"
+
+				else
+
+					redirect_to root_url
+
+				end
 	
 			else
 	
@@ -52,7 +60,15 @@ class SplashController < ApplicationController
 					sessionToken: call[:body]['sessionToken']
 				}
 
-				redirect_to '/dashboard/'
+				if params[:zendesk] == 'true'
+
+					redirect_to "/api/v1/sso/zendesk?return_to=#{ params[:return_to]}"
+
+				else
+
+					redirect_to '/dashboard/'
+
+				end
 	
 			else
 	

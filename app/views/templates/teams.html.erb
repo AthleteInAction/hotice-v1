@@ -1,0 +1,29 @@
+<div class="app_cont">
+
+	<div class="head" ng:if="!my">Teams</div>
+	<div class="head" ng:if="my">My Teams</div>
+	<div class="body">
+
+		<table class="team_table">
+			
+			<tr>
+				<td>Name</td>
+				<td>Members</td>
+				<td>W</td>
+				<td>L</td>
+				<td>OTL</td>
+			</tr>
+
+			<tr ng:repeat="team in teams track by $index" ng:click="teamLink(team.objectId)">
+				<td>{{team.name}}</td>
+				<td>{{team.confirmed.count}}</td>
+				<td>{{team.wins}}</td>
+				<td>{{team.losses}}</td>
+				<td>{{team.otl}}</td>
+			</tr>
+
+		</table>
+
+	</div>
+
+</div>

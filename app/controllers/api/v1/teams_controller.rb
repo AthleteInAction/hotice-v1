@@ -4,13 +4,15 @@ module Api
 
   		def index
 
-  			call = db.APICall path: '/classes/teams'
+  			call = db.APICall path: '/classes/Teams',where: {}.to_json
 
   			render json: call
 
   		end
 
   		def create
+
+  			call = db.APICall path: '/classes/Teams',method: 'POST',payload: params[:team]
 
   			render json: call
 

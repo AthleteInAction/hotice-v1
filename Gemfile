@@ -55,5 +55,7 @@ group :production do
 end
 
 group :assets do
-  gem 'angularjs-rails'
+  # gem 'angularjs-rails'
 end
+
+gem 'jwt'

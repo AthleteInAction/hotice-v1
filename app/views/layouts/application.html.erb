@@ -5,18 +5,19 @@
   <%= stylesheet_link_tag    'application/application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script>var current_user = <%= session[:user].to_json.html_safe %>;</script>
 </head>
 <body ng:App="HotIce">
 
 	<table class="dashboard_table">
 
-		<tr>
-			<td valign="top" align="center">
+		<tr class="in">
+			<td class="in" valign="top" align="center">
 
 				<%= image_tag 'hotice.png',height: 80,class: 'logo' %>
 
 			</td>
-			<td valign="middle" align="right">
+			<td class="in" valign="middle" align="right">
 
 				<a href="/signout" class="orange_link">Sign Out</a>
 				<a href="#" class="orange_link"><%= current_user['gamertag'] || current_user['email'] %></a>
@@ -25,8 +26,8 @@
 			</td>
 		</tr>
 
-		<tr>
-			<td valign="top">
+		<tr class="in">
+			<td class="in" valign="top">
 
 				<div class="create_team"><a href="/dashboard/#/teams/new">+ Create a Team</a></div>
 
@@ -40,7 +41,7 @@
 				<div class="nav_killer"></div>
 
 			</td>
-			<td valign="top">
+			<td class="in" valign="top">
 
 				<div ng:view></div>
 

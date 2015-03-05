@@ -20,6 +20,8 @@ Rails.application.routes.draw do
         
     	resources :users
     	resources :teams
+      get 'sso/zendesk' => 'sso#zendesk'
+      get 'sso/test' => 'sso#test'
 
     end
   end

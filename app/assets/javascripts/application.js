@@ -16,10 +16,11 @@
 //= require AngularJS/angular
 //= require AngularJS/angular-resource
 //= require AngularJS/angular-ui
+//= require AngularJS/angular-route
 //= require_directory ./AngularCTRL
 //= require_tree .
 var HotIce;
-HotIce = angular.module('HotIce',['ngResource','ui']);
+HotIce = angular.module('HotIce',['ngRoute','ngResource','ui']);
 HotIce.value('$anchorScroll',angular.noop);
 HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
 	
@@ -31,6 +32,12 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 	}).when('/teams/new',{
 		templateUrl : '/angularjs/templates/teams_new.html',
 		controller: TeamsNewCtrl
+	}).when('/teams',{
+		templateUrl : '/angularjs/templates/teams.html',
+		controller: TeamsCtrl
+	}).when('/myteams',{
+		templateUrl : '/angularjs/templates/teams.html',
+		controller: TeamsCtrl
 	}).otherwise({
 		redirectTo: '/home'
 	});
@@ -66,10 +73,230 @@ HotIce.config(['$httpProvider',function($httpProvider){
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 
+HotIce.directive('myDirective',function(){
+	return {
+		restrict: 'A',
+		scope: {
+			myCallback: '&'
+		},
+		link: function(scope,element,attrs){
+
+			element.bind('keyup',function(){
+
+				scope.$evalAsync(function(){
+					scope.myCallback({item: 'test'});
+				});
+
+			});
+		}
+	}
+});
+
 
 // jQuery Datepicker
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
+HotIce.directive('wamblAutocomplete',['$compile',function($compile){
+    return {
+    	restrict: 'A',
+    	scope: {
+    		wamblAutocomplete: '=',
+    		wamblOnSelect: '&',
+    		wamblOnClick: '&'
+    	},
+    	require: 'ngModel',
+        link: function(scope,element,attrs,ngModel){
+
+        	var template = '<div class="autocomplete"><ul><li ng:repeat="item in wamblItems track by $index"><a href="" ng:class="{selected: $index==wamblIndex}" ng:click="clickHandle($index)">{{translate(item)}}</a></li></ul></div>';
+        	var el = angular.element(template);
+        	compiled = $compile(el);
+        	element.after(el);
+        	compiled(scope);
+	
+        	var selectedIndex = -1;
+        	var prevLength = 0;
+	
+        	var w,l,r,lr,rr;
+        	var filtered = [];
+
+        	// Input Bottom Left Radius
+        	lr = parseInt(element.css('border-bottom-left-radius'));
+        	// Input Bottom Right Radius
+        	rr = parseInt(element.css('border-bottom-right-radius'));
+
+        	scope.translate = function(item){
+
+        		return item[attrs.wamblDisplayAttr];
+
+        	};
+
+        	scope.doSize = function(){
+
+        		// Input Width
+        		w = parseInt(element.css('width'));
+        		// List Left Border Width
+        		l = parseInt(element.next().find('ul').css('border-left-width'));
+        		// List Right Border Width
+        		r = parseInt(element.next().find('ul').css('border-right-width'));
+
+        		var f = parseInt(element.css('font-size'));
+
+        		element.next().css('width',(w-l-r)+'px').css('font-size',(f)+'px').hide();
+
+        	};
+        	scope.doSize();
+
+        	scope.hideList = function(){
+
+        		element.next().hide();
+        		element.css('border-bottom-right-radius',lr+'px');
+        		element.css('border-bottom-left-radius',rr+'px');
+
+        	};
+        	scope.showList = function(){
+
+        		element.next().show();
+        		element.css('border-bottom-right-radius','0px');
+        		element.css('border-bottom-left-radius','0px');
+
+        	};
+
+        	element.bind('focus',function(event){
+
+        		scope.doSize();
+        		scope.filter();
+        		if (filtered.length > 0){scope.showList();}
+
+        	});
+
+        	element.bind('blur',function(event){
+
+        		selectedIndex = -1;
+
+        		scope.filter();
+
+        		setTimeout(function(){
+        			scope.hideList()
+        		},50);
+
+        	});
+            
+        	element.bind('keyup',function(event){
+
+        		scope.doSize();
+	
+            	scope.filter();
+
+            	var maxIndex = scope.wamblItems.length-1;
+	
+        		if (event.which == 38 && scope.wamblItems.length > 0){
+	
+        			if (selectedIndex >= 0){selectedIndex--;}
+	
+        		} else if (event.which == 40 && scope.wamblItems.length > 0){
+	
+        			if (selectedIndex < maxIndex){selectedIndex++;}
+	
+        		}
+	
+        		if (event.which == 38){
+	
+					element.val(element.val());
+	
+        		} else if (event.which == 40){
+	
+        			element.val(element.val());
+	
+        		}
+	
+        		if (event.which == 13 && selectedIndex >= 0){
+
+        			var d = scope.translate(scope.wamblItems[selectedIndex]);
+
+        			element.val(d);
+        			
+        			scope.hideList();
+	
+        			scope.wamblOnSelect({item: scope.wamblItems[selectedIndex]});
+
+        			scope.wamblItems = [scope.wamblItems[selectedIndex]];
+
+        			selectedIndex = -1;
+	
+        		}
+
+        		scope.wamblIndex = selectedIndex;
+        		scope.$apply(function(){
+            		scope.wamblIndex = selectedIndex;
+            	});
+
+        	});
+
+			scope.filter = function(){
+
+				var tval = element.val();
+
+				if (tval.length != prevLength){
+            		selectedIndex = -1;
+            		prevLength = tval.length;
+            	}
+	
+            	filtered = [];
+	
+            	if (tval.length > 0){
+				
+            		scope.showList();
+
+            		$.each(scope.wamblAutocomplete,function(key,val){
+	
+            			if (val[attrs.wamblDisplayAttr].toLowerCase().search(tval.toLowerCase().toString()) != -1){
+            				
+            				filtered.push(val);
+	
+            			}
+	
+            		});
+	
+            	} else {
+            		
+            		scope.hideList();
+	
+            	}
+
+            	scope.wamblItems = filtered;
+            	scope.$apply(function(){
+            		scope.wamblItems = filtered;
+            	});
+
+            	if (filtered.length == 0){
+            		scope.hideList();
+            	} else {
+            		scope.showList();
+            	}
+
+			};
+
+			scope.clickHandle = function(i){
+
+				var d = scope.translate(scope.wamblItems[i]);
+
+				element.val(d);
+
+				scope.hideList();
+
+				scope.wamblOnClick({item: scope.wamblItems[i]});
+
+				scope.wamblItems = [scope.wamblItems[i]];
+
+				selectedIndex = -1;
+
+			};
+
+        }
+    }
+}]);
+
+
 HotIce.directive('datepicker',function(){
 	return {
 		restrict: "A",
@@ -320,15 +547,6 @@ var days = [
 	}
 ];
 
-(function($) {
-    $.fn.goTo = function() {
-        $('html, body').animate({
-            scrollTop: ($(this).offset().top-200) + 'px'
-        }, 'fast');
-        return this; // for chaining...
-    }
-})(jQuery);
-
 function setCookie(cname,cvalue,exdays)
 {
 var d = new Date();
@@ -362,5 +580,42 @@ var pop = function(url,width,height){
 	window.open(url,'_blank','height='+height+',width='+width+',left='+l+',top='+t);
 
 	return false;
+
+};
+
+
+
+// OOOOOOOOOOOOO
+var makeRelation = function(data){
+
+	var temp = {
+		__op: 'AddRelation',
+		objects: []
+	};
+
+	$.each(data,function(key,val){
+
+		var r = {
+			__type: 'Pointer',
+			className: '_User',
+			objectId: val.objectId
+		};
+
+		temp.objects.push(r);
+
+	});
+
+	return temp;
+
+};
+var makePointer = function(data){
+
+	var temp = {
+		__type: 'Pointer',
+		className: '_User',
+		objectId: data.objectId
+	};
+
+	return temp;
 
 };

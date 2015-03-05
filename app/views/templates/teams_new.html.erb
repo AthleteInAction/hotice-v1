@@ -3,20 +3,54 @@
 	<div class="head">Create A Team</div>
 	<div class="body">
 
-		<form class="standard" onsubmit="return false;">
+		<div class="standard">
 
-			<div><input placeholder="Team Name" type="text" class="FULL" /></div>
+			<div class="sep"><input ng:model="team.name" placeholder="Team Name" type="text" class="FULL" onenter="createTeam()" /></div>
 
-			<div>
-				<table class="radio">
-					<tr>
-						<td>hjkhj</td>
-						<td>Time Zone</td>
-					</tr>
-				</table>
+			<div class="sep">
+
+				<select ng:model="team.timezone">
+					<option value="">Select a Time Zone</option>
+					<option value="pacific">Pacific</option>
+					<option value="mountain">Mountain</option>
+					<option value="central">Central</option>
+					<option value="eastern">Eastern</option>
+					<option value="atlantic">Atlantic</option>
+					<option value="newfoundland">Newfoundland</option>
+					<option value="europe">Europe</option>
+					<option value="other">Other</option>
+				</select>
+
 			</div>
 
-		</form>
+			<div class="sep">
+
+				<table class="inner">
+
+					<tr class="inner">
+						<th class="inner">Members</th>
+						<th class="inner">
+							<input type="text" class="FULL" placeholder="Add members to your team..." wambl-autocomplete="users" wambl-on-select="addTeammate(item)" wambl-on-click="addTeammate(item)" wambl-display-attr="gamertag" ng:model="teammateAdder" tester="users" />
+						</th>
+					</tr>
+
+					<tr class="inner" ng:repeat="user in team.invited">
+						<td class="inner">{{user.gamertag}}</td>
+						<td class="inner"><a href="" class="remove" ng:click="removeTeammate($index)" ng:if="user.objectId != current_user['objectId']">Remove</a></td>
+					</tr>
+
+				</table>
+
+			</div>
+
+			<div class="sep" align="center">
+
+				<input type="submit" class="button FULL" value="Submit" ng:if="!submitting" ng:click="createTeam()" />
+				<input type="submit" class="button" value="Loading..." ng:if="submitting" ng:disabled="true" />
+
+			</div>
+
+		</div>
 
 	</div>
 

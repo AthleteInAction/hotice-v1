@@ -17,10 +17,15 @@
 			<div class="splash_form">
 
 				<%= form_tag "/", method: :post,autocomplete: 'off' do %>
+
+					<% if params[:zendesk] == 'true' %>
+						<%= hidden_field_tag :return_to,nil,value: params[:return_to] %>
+						<%= hidden_field_tag :zendesk,nil,value: 'true' %>
+					<% end %>
 					
-					<%= text_field_tag :gamertag,nil,class: "splash",placeholder: "Xbox Live Gamertag (Optional)" %>
-					<%= text_field_tag :email,nil,class: "splash",placeholder: "Email (Required)" %>
-					<%= password_field_tag :password,nil,class: "splash",placeholder: "Create Password (Required)" %>
+					<%= text_field_tag :gamertag,nil,class: "splash",placeholder: "Xbox Live Gamertag" %>
+					<%= text_field_tag :email,nil,class: "splash",placeholder: "Email" %>
+					<%= password_field_tag :password,nil,class: "splash",placeholder: "Create Password" %>
 					<%= submit_tag "Sign Up",class: "splash button" %>
 
 				<% end %>

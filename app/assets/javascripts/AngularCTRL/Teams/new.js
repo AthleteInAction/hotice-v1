@@ -34,8 +34,6 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			$scope.teammateAdder = null;
 
-			JP($scope.users);
-
 		};
 
 		$scope.removeTeammate = function(i){
@@ -64,7 +62,6 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 				// window.location = '/dashboard/#/teams/myteams';
 				$scope.submitting = false;
-				JP(data);
 
 			});
 

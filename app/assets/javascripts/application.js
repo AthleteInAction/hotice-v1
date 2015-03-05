@@ -73,25 +73,6 @@ HotIce.config(['$httpProvider',function($httpProvider){
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 
-HotIce.directive('myDirective',function(){
-	return {
-		restrict: 'A',
-		scope: {
-			myCallback: '&'
-		},
-		link: function(scope,element,attrs){
-
-			element.bind('keyup',function(){
-
-				scope.$evalAsync(function(){
-					scope.myCallback({item: 'test'});
-				});
-
-			});
-		}
-	}
-});
-
 
 // jQuery Datepicker
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
@@ -114,6 +95,7 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
         	compiled(scope);
 	
         	var selectedIndex = -1;
+        	
         	var prevLength = 0;
 	
         	var w,l,r,lr,rr;
@@ -123,6 +105,19 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
         	lr = parseInt(element.css('border-bottom-left-radius'));
         	// Input Bottom Right Radius
         	rr = parseInt(element.css('border-bottom-right-radius'));
+
+        	scope.setOffset = function(){
+
+        		selectedIndex = -1;
+
+        		if (attrs.wamblSelectFirst && attrs.wamblSelectFirst == 'true'){
+
+        			selectedIndex = -1+1;
+
+        		}
+
+        	};
+        	scope.setOffset();
 
         	scope.translate = function(item){
 
@@ -171,13 +166,15 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
         	element.bind('blur',function(event){
 
-        		selectedIndex = -1;
+        		scope.setOffset();
 
         		scope.filter();
 
         		setTimeout(function(){
         			scope.hideList()
         		},50);
+
+
 
         	});
             
@@ -209,7 +206,7 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 	
         		}
 	
-        		if (event.which == 13 && selectedIndex >= 0){
+        		if (event.which == 13 && selectedIndex >= 0 && filtered.length > 0){
 
         			var d = scope.translate(scope.wamblItems[selectedIndex]);
 
@@ -221,11 +218,10 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
         			scope.wamblItems = [scope.wamblItems[selectedIndex]];
 
-        			selectedIndex = -1;
+        			scope.setOffset();
 	
         		}
 
-        		scope.wamblIndex = selectedIndex;
         		scope.$apply(function(){
             		scope.wamblIndex = selectedIndex;
             	});
@@ -237,7 +233,7 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 				var tval = element.val();
 
 				if (tval.length != prevLength){
-            		selectedIndex = -1;
+            		scope.setOffset();
             		prevLength = tval.length;
             	}
 	

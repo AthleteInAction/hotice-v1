@@ -80,7 +80,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   # config.active_record.dump_schema_after_migration = false
 
+  # Parse.com
   APP_ID = 'pTgNnmnQSpIeZrFHrzWhdEHBsQpUJPiiFemsbUme'
   REST_KEY = 'X4YzW6g7pAq60pJCTAsQ3lfyOEQuEl1yznPLgixr'
+
+  # Zendesk
+  ZENDESK_DOMAIN = 'hotice1'
+  SHARED_SECRET = 'RWDL1VZwzLEZZIlZiF0wrP3mP4iSBDIsj0MfGm5ZOg8FD7DV'
   
 end

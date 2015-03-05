@@ -14,9 +14,9 @@ module Api
 					jti: rand(2<<64).to_s
 				}
 
-				jwt = JWT.encode zendesk,'iVfLWW4F58STWWC7Se84Oa5CcjVTf6y59uq9Yx4rcmTsO6sG'
+				jwt = JWT.encode zendesk,SHARED_SECRET
 
-				redirect_to "https://hotice1.zendesk.com/access/jwt?jwt=#{jwt}&return_to=#{params[:return_to]}"
+				redirect_to "https://#{ZENDESK_DOMAIN}.zendesk.com/access/jwt?jwt=#{jwt}&return_to=#{params[:return_to]}"
 				final = {
 					params: params,
 					zd: zendesk,

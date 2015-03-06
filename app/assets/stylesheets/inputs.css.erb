@@ -32,7 +32,7 @@ input[type="text"].splash:focus,input[type="password"].splash:focus {
 	outline: none;
 }
 
-table.dashboard_table input[type="text"],input[type="password"] {
+table.dashboard_table input[type="text"],table.dashboard_table input[type="password"] {
 	font-family: helvetica,arial;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -63,4 +63,23 @@ div.standard input[type="submit"].button:hover {
 	/*color: #8C8B8B;*/
 	background-image: -webkit-linear-gradient(#c3c3c3,#c3c3c3);
 	background-image: linear-gradient(#c3c3c3,#c3c3c3);
+}
+
+
+div.input_error {
+	background: #FD4747;
+	color: #FFF;
+	font-size: 14px;
+	padding: 8px 8px 6px 8px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+div.input_alert {
+	background: #FFF29C;
+	color: #6B6B6B;
+	text-shadow: 1px 1px 0px #FFF9D8;
+	font-size: 14px;
+	padding: 8px 8px 6px 8px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 }

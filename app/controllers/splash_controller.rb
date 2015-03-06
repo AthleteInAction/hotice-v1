@@ -23,6 +23,7 @@ class SplashController < ApplicationController
 				session[:user] = {
 					username: call[:body]['username'],
 					email: call[:body]['email'],
+					email_list: params['email_list'],
 					gamertag: call[:body]['gamertag'],
 					objectId: call[:body]['objectId'],
 					sessionToken: call[:body]['sessionToken']
@@ -48,13 +49,14 @@ class SplashController < ApplicationController
 
 		else
 
-			call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password]}
+			call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password],email_list: params[:email_list]}
 
 			if call[:code] == 201
 				
 				session[:user] = {
 					username: params['email'],
 					email: params['email'],
+					email_list: params['email_list'],
 					gamertag: params['gamertag'],
 					objectId: call[:body]['objectId'],
 					sessionToken: call[:body]['sessionToken']

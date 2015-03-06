@@ -3,7 +3,6 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		$scope.current_user = current_user;
 
-		$scope.users = [];
 		var t = [
 			{gamertag: 'AthleteInAction'},
 			{gamertag: 'DafDHunter'},
@@ -12,11 +11,11 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			{gamertag: 'Digs510'},
 			{gamertag: 'Finchpoker'}
 		];
-		// $scope.users = t;
 
 		$scope.submitting = false;
 
 		$scope.team = {
+			name: '',
 			creator: current_user,
 			confirmed: [current_user],
 			invited: [current_user],
@@ -26,11 +25,17 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			otl: 0,
 			dnf: 0
 		};
+		$scope.errors = {
+			name: {
+				unique: true,
+				searching: false,
+				message: null
+			}
+		};
 
 		$scope.addTeammate = function(item){
 
 			$scope.team.invited.push(item);
-			$scope.users.removeWhere('gamertag',item.gamertag);
 
 			$scope.teammateAdder = null;
 
@@ -41,64 +46,122 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			var item = $scope.team.invited[i];
 
 			$scope.team.invited.splice(i,1);
-			$scope.users.push(item);
 
 		};
 
 		$scope.createTeam = function(){
 
-			// $scope.submitting = true;
+			if ($scope.validate()){
 
-			var team = angular.copy($scope.team);
+				$scope.submitting = true;
 
-			team.creator = makePointer(team.creator);
-			team.admins = makeRelation(team.admins);
-			team.invited = makeRelation(team.invited);
-			team.confirmed = makeRelation(team.confirmed);
+				var team = angular.copy($scope.team);
 
-			var Team = new ApiModel({team: team});
+				team.creator = makePointer(team.creator);
+				team.admins = makeRelation(team.admins);
+				team.invited = makeRelation(team.invited);
+				team.confirmed = makeRelation(team.confirmed);
 
-			Team.$create({type: 'teams'},function(data){
+				var Team = new ApiModel({team: team});
 
-				// window.location = '/dashboard/#/teams/myteams';
-				$scope.submitting = false;
+				Team.$create({type: 'teams'},function(data){
 
-			});
+					// window.location = '/dashboard/#/teams/myteams';
+					JP(data);
+					$scope.submitting = false;
+
+				});
+
+			}
+
+		};
+
+		$scope.checkTeamName = function(){
+
+			if ($scope.team.name.length > 0){
+
+				this.options = {
+					type: 'teams',
+					constraints: '{"name_i":"'+$scope.team.name.toLowerCase()+'"}'
+				};
+
+				ApiModel.query(this.options,function(data){
+
+					if (data.code == 200){
+
+						if (data.body.results.length > 0){
+
+							$scope.errors.name.message = 'Team name has been taken.';
+
+						} else {
+
+							$scope.errors.name.message = null;
+
+						}
+
+					}
+
+					$scope.errors.name.searching = false;
+
+				});
+
+			}
 
 		};
 
-		$scope.filterUsers = function(item){
+		$scope.nameSearch = function(){
 
+			if ($scope.team.name.length > 0){
 
+				$scope.errors.name.searching = true;
+				$scope.errors.name.message = null;
 
-		};
+			} else {
 
-		$scope.getUsers = function(){
+				$scope.errors.name.searching = false;
+				$scope.errors.name.message = null;
 
-			$scope.submitting = true;
-
-			this.options = {
-				type: 'users'
-			};
-
-			ApiModel.query(this.options,function(data){
-
-				$scope.users = data.body.results;
-				$scope.users.removeWhere('objectId',current_user.objectId);
-
-				$scope.submitting = false;
-
-			});
+			}
 
 		};
-		$scope.getUsers();
+
+		$scope.validate = function(){
+
+			if ($scope.team.name.length > 0){
+
+			} else {
+				CLEAN = false;
+				$scope.errors.name.message = 'Team name cannot be blank.';
+				return false;
+			}
+
+			return true;
+
+		};
 
 	}
 ];
 Array.prototype.removeWhere = function(key,val){
+
     for (i = 0; i < this.length; i++) {
     	if (this[i][key] == val){
+
     		this.splice(i,1);
+
     	}
     }
+
 }
+// Array.prototype.contains = function(key,val){
+	
+// 	var has = false;
+
+//     for (i = 0; i < this.length; i++) {
+//     	if (this[i][key] == val){
+//     		has = true;
+//     		break;
+//     	}
+//     }
+
+//     return has;
+// }

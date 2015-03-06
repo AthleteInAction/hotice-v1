@@ -82,20 +82,21 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
     	restrict: 'A',
     	scope: {
     		wamblAutocomplete: '=',
+    		wamblExclude: '=',
     		wamblOnSelect: '&',
     		wamblOnClick: '&'
     	},
     	require: 'ngModel',
         link: function(scope,element,attrs,ngModel){
 
-        	var template = '<div class="autocomplete"><ul><li ng:repeat="item in wamblItems track by $index"><a href="" ng:class="{selected: $index==wamblIndex}" ng:click="clickHandle($index)">{{translate(item)}}</a></li></ul></div>';
+        	var template = '<div class="autocomplete"><ul><li ng:if="wamblItems.length == 0"><a href="" ng:click="">{{message}}</a></li><li ng:repeat="item in wamblItems track by $index"><a href="" ng:class="{selected: $index==wamblIndex}" ng:click="clickHandle($index)">{{translate(item)}}</a></li></ul></div>';
         	var el = angular.element(template);
         	compiled = $compile(el);
         	element.after(el);
         	compiled(scope);
 	
         	var selectedIndex = -1;
-        	
+
         	var prevLength = 0;
 	
         	var w,l,r,lr,rr;
@@ -157,6 +158,14 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
         	};
 
         	element.bind('focus',function(event){
+
+        		scope.$apply(function(){
+        			if (attrs.wamblMessage){
+        				scope.message = attrs.wamblMessage;
+        			} else {
+        				scope.message = 'No Results';
+        			}
+        		});
 
         		scope.doSize();
         		scope.filter();
@@ -245,7 +254,11 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
             		$.each(scope.wamblAutocomplete,function(key,val){
 	
-            			if (val[attrs.wamblDisplayAttr].toLowerCase().search(tval.toLowerCase().toString()) != -1){
+            			if (
+            				val[attrs.wamblDisplayAttr].toLowerCase().search(tval.toLowerCase().toString()) != -1
+            				&&
+            				!scope.wamblExclude.contains(attrs.wamblDisplayAttr,val[attrs.wamblDisplayAttr])
+            			){
             				
             				filtered.push(val);
 	
@@ -264,11 +277,11 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
             		scope.wamblItems = filtered;
             	});
 
-            	if (filtered.length == 0){
-            		scope.hideList();
-            	} else {
-            		scope.showList();
-            	}
+            	// if (filtered.length == 0){
+            	// 	scope.hideList();
+            	// } else {
+            	// 	scope.showList();
+            	// }
 
 			};
 
@@ -287,6 +300,21 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 				selectedIndex = -1;
 
 			};
+
+			Array.prototype.contains = function(key,val){
+
+				var has = false;
+
+				for (i = 0; i < this.length; i++) {
+					if (this[i][key] == val){
+						has = true;
+						break;
+					}
+				}
+
+				return has;
+
+			}
 
         }
     }

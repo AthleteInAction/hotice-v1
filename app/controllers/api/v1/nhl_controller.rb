@@ -9,6 +9,15 @@ module Api
         path = "#{Rails.root}/log/scores.jsonp"
 
         lastGetPath = "#{Rails.root}/log/scoreTime.txt"
+        if !File.exists? lastGetPath
+
+          File.open lastGetPath,'w+' do |f|
+
+            f.write Time.now.to_i
+
+          end
+
+        end
         lastGet = File.read(lastGetPath).to_i
 
         now = Time.now.to_i

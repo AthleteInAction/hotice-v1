@@ -7,18 +7,27 @@ module Api
         live = false
 
         path = "#{Rails.root}/log/scores.jsonp"
+        if !File.exists?(path) || params[:reset] == 'true'
 
-        lastGetPath = "#{Rails.root}/log/scoreTime.txt"
-        if !File.exists? lastGetPath
+          File.open path,'w+' do |f|
 
-          File.open lastGetPath,'w+' do |f|
-
-            f.write Time.now.to_i
+            f.write '{}'
 
           end
 
         end
-        lastGet = File.read(lastGetPath).to_i
+
+        lastGetPath = "#{Rails.root}/log/scoreTime.txt"
+        if !File.exists?(lastGetPath) || params[:reset] == 'true'
+
+          File.open lastGetPath,'w+' do |f|
+
+            f.write '0'
+
+          end
+
+        end
+        lastGet = File.read(lastGetPath).to_i 
 
         now = Time.now.to_i
 

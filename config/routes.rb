@@ -20,6 +20,11 @@ Rails.application.routes.draw do
         
     	resources :users
     	resources :teams
+      resources :notifications
+      resources :online
+      
+      get 'nhl/scores',to: 'nhl#scores'
+
       get 'sso/zendesk' => 'sso#zendesk'
       get 'sso/test' => 'sso#test'
 

@@ -29,20 +29,23 @@
 						<label>I acknowlegde the above gamertag belongs to me</label>
 					</div>
 					<%= text_field_tag :email,nil,class: "splash",placeholder: "Email" %>
+					<div class="splash_check">
+						<%= check_box_tag :email_list,true,true %>
+						<label>We don't send you emails!</label>
+					</div>
 					<%= password_field_tag :password,nil,class: "splash",placeholder: "Create Password" %>
 					<div class="splash_check">
-						<%= check_box_tag :email_list,true %>
-						<label>I want to receive non-admin related emails</label>
+						<label>Password must be at least 4 characters</label>
 					</div>
 					<%= submit_tag "Sign Up",class: "splash button" %>
 
 				<% end %>
 
-				<% if @errors.count > 0 %>
+				<% if @errors[:create] %>
 
 					<div class="splash_form_error">
 						<ul>
-							<li><%= @errors['error'].gsub('username','email') %></li>
+							<li><%= @errors[:create]['error'].gsub('username','email') %></li>
 						</ul>
 					</div>
 

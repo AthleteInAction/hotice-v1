@@ -29,7 +29,8 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			name: {
 				unique: true,
 				searching: false,
-				message: null
+				message: null,
+				valid: false
 			}
 		};
 
@@ -67,7 +68,7 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 				Team.$create({type: 'teams'},function(data){
 
 					// window.location = '/dashboard/#/teams/myteams';
-					JP(data);
+					console.log(data);
 					$scope.submitting = false;
 
 				});
@@ -91,11 +92,12 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 						if (data.body.results.length > 0){
 
-							$scope.errors.name.message = 'Team name has been taken.';
+							$scope.errors.name.message = '"'+$scope.team.name+'" has been taken.';
 
 						} else {
 
 							$scope.errors.name.message = null;
+							$scope.errors.name.valid = true;
 
 						}
 
@@ -110,6 +112,8 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 		};
 
 		$scope.nameSearch = function(){
+
+			$scope.errors.name.valid = false;
 
 			if ($scope.team.name.length > 0){
 
@@ -133,6 +137,12 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 				CLEAN = false;
 				$scope.errors.name.message = 'Team name cannot be blank.';
 				return false;
+			}
+
+			if (!$scope.errors.name.valid){
+
+				return false;
+
 			}
 
 			return true;

@@ -41,15 +41,30 @@ class SplashController < ApplicationController
 	
 			else
 	
-				@errors = call[:body]
+				@errors = {
+					login: call[:body]
+				}
 	
-				render json: @errors
+				render 'index',layout: 'splash'
 	
 			end
 
 		else
 
-			call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password],email_list: params[:email_list]}
+			if params[:password] && params[:password].to_s.length >= 4
+
+				call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password],email_list: params[:email_list]}
+
+			else 
+
+				call = {
+					code: 404,
+					body: {
+						'error' => 'Invalid password'
+					}
+				}
+
+			end
 
 			if call[:code] == 201
 				
@@ -74,7 +89,9 @@ class SplashController < ApplicationController
 	
 			else
 	
-				@errors = call[:body]
+				@errors = {
+					create: call[:body]
+				}
 	
 				render 'index',layout: 'splash'
 	

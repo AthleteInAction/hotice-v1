@@ -1,25 +1,42 @@
 <div class="app_cont">
 
-	<div class="head" ng:if="!my">Teams</div>
-	<div class="head" ng:if="my">My Teams</div>
-	<div class="body">
+	<div class="head">
+		<div class="LEFT">Teams</div>
+		<div class="mini RIGHT">
+			<select ng:model="sort" ng:change="teamSort()">
+				<option value="name">Sort by:</option>
+				<option value="wins">Wins</option>
+				<option value="losses">Losses</option>
+				<option value="otl">OTL</option>
+			</select>
+		</div>
+		<div class="CLEAR"></div>
+	</div>
+	<div class="body NO_PAD">
 
-		<table class="team_table">
-			
-			<tr>
-				<td>Name</td>
-				<td>Members</td>
-				<td>W</td>
-				<td>L</td>
-				<td>OTL</td>
+		<table class="teams_table">
+
+			<tr ng:if="teams.length == 0">
+				<td>Loading...</td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 
-			<tr ng:repeat="team in teams track by $index" ng:click="teamLink(team.objectId)">
+			<tr ng:repeat="team in teams | orderBy:sort:rev">
 				<td>{{team.name}}</td>
-				<td>{{team.confirmed.count}}</td>
-				<td>{{team.wins}}</td>
-				<td>{{team.losses}}</td>
-				<td>{{team.otl}}</td>
+				<td>
+					{{team.wins}}
+					<div class="mini">W</div>
+				</td>
+				<td>
+					{{team.losses}}
+					<div class="mini">L</div>
+				</td>
+				<td>
+					{{team.otl}}
+					<div class="mini">OTL</div>
+				</td>
 			</tr>
 
 		</table>

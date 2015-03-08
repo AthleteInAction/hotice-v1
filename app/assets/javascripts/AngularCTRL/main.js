@@ -30,5 +30,59 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			$scope.users = users;
 		});
 
+
+		$scope.getNotifications = function(complete){
+
+			JP('NOTIFICATIONS: '+new Date());
+
+			this.options = {
+				type: 'notifications'
+			};
+
+			ApiModel.query(this.options,function(data){
+
+				complete(data.body.results);
+
+			});
+
+		};
+		$scope.getNotifications(function(notifications){
+			$scope.notifications = notifications;
+		});
+
+
+		$scope.handleNotification = function(notification,accepted){
+
+			JP(notification);
+			JP(accepted)
+
+		};
+
+		$scope.getOnlineUsers = function(){
+
+			JP('ONLINE USERS: '+new Date());
+
+			this.options = {
+				type: 'online'
+			};
+
+			ApiModel.query(this.options,function(data){
+				
+				$scope.onlineUsers = data.results
+
+			});
+
+		};
+		$scope.getOnlineUsers();
+
+		setInterval(function(){
+
+			$scope.getNotifications(function(notifications){
+				$scope.notifications = notifications;
+			});
+			$scope.getOnlineUsers();
+
+		},20000);
+
 	}
 ];

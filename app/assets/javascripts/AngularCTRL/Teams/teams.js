@@ -3,10 +3,10 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		$scope.params = $routeParams;
 
-		$scope.my = false;
-		if ($location.path() == '/myteams'){$scope.my = true;}
+		$scope.sort = 'name';
+		$scope.rev = false;
 
-		$scope.teams = {};
+		$scope.teams = [];
 
 		$scope.getTeams = function(){
 
@@ -27,6 +27,16 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 		$scope.teamLink = function(id){
 
 			window.location = '/dashboard/#/teams/'+id
+
+		};
+
+		$scope.teamSort = function(){
+
+			if ($scope.sort == 'name'){
+				$scope.rev = false;
+			} else {
+				$scope.rev = true;
+			}
 
 		};
 

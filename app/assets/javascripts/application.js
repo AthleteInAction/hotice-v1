@@ -20,7 +20,7 @@
 //= require_directory ./AngularCTRL
 //= require_tree .
 var HotIce;
-HotIce = angular.module('HotIce',['ngRoute','ngResource','ui']);
+HotIce = angular.module('HotIce',['ngRoute','ngResource','ui','ngSanitize']);
 HotIce.value('$anchorScroll',angular.noop);
 HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
 	

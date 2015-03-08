@@ -8,7 +8,7 @@
 			<div class="sep">
 				<input ng:model="team.name" onstop="checkTeamName()" ng:keyup="nameSearch()" delay="750" placeholder="Team Name" type="text" class="FULL" onenter="createTeam()" />
 				<div class="input_error" ng:if="errors.name.message">{{errors.name.message}}</div>
-				<div class="input_alert" ng:if="errors.name.searching">Searching...</div>
+				<div class="input_alert" ng:if="errors.name.searching">Checking if this team name already exists...</div>
 			</div>
 
 			<div class="sep">
@@ -34,7 +34,7 @@
 					<tr class="inner">
 						<th class="inner">Members:</th>
 						<th class="inner">
-							<input type="text" class="FULL" placeholder="Invite members to your team..." wambl-autocomplete="$parent.users" wambl-exclude="team.invited" wambl-on-select="addTeammate(item)" wambl-on-click="addTeammate(item)" wambl-display-attr="gamertag" wambl-select-first="true" ng:model="teammateAdder" />
+							<input type="text" class="FULL" placeholder="Invite people to your team..." wambl-autocomplete="$parent.users" wambl-exclude="team.invited" wambl-on-select="addTeammate(item)" wambl-on-click="addTeammate(item)" wambl-display-attr="gamertag" wambl-select-first="true" ng:model="teammateAdder" />
 						</th>
 					</tr>
 

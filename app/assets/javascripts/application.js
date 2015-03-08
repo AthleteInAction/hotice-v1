@@ -41,6 +41,9 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 	}).when('/myteams',{
 		templateUrl : '/angularjs/templates/teams.html',
 		controller: TeamsCtrl
+	}).when('/events/:id/registration',{
+		templateUrl : '/angularjs/templates/event_registration.html',
+		controller: EventRegistrationCtrl
 	}).otherwise({
 		redirectTo: '/home'
 	});
@@ -80,7 +83,7 @@ HotIce.config(['$httpProvider',function($httpProvider){
 // jQuery Datepicker
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
-HotIce.directive('scoreboard',['ApiModel',function(ApiModel){
+HotIce.directive('scoreboard',['ApiModel','$interval',function(ApiModel,$interval){
 
 	return {
 
@@ -107,6 +110,7 @@ HotIce.directive('scoreboard',['ApiModel',function(ApiModel){
 				ApiModel.query(this.options,function(data){
 	
 					scope.scores = data.scores;
+					JP(data.diff/60);
 	
 					n = max - data.scores.length;
 	
@@ -122,7 +126,7 @@ HotIce.directive('scoreboard',['ApiModel',function(ApiModel){
 	
 			};
 			scope.getScores();
-			setTimeout(function(){
+			$interval(function(){
 				scope.getScores();
 			},20000);
 	
@@ -324,11 +328,21 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
             		scope.showList();
 
             		$.each(scope.wamblAutocomplete,function(key,val){
+
+            			var exclude = false;
+
+            			if (attrs.wamblExclude){
+
+            				if (scope.wamblExclude.contains(attrs.wamblDisplayAttr,val[attrs.wamblDisplayAttr])){
+            					exclude = true;
+            				}
+
+            			}
 	
             			if (
             				val[attrs.wamblDisplayAttr].toLowerCase().search(tval.toLowerCase().toString()) != -1
             				&&
-            				!scope.wamblExclude.contains(attrs.wamblDisplayAttr,val[attrs.wamblDisplayAttr])
+            				!exclude
             			){
             				
             				filtered.push(val);
@@ -681,7 +695,7 @@ var pop = function(url,width,height){
 
 
 // OOOOOOOOOOOOO
-var makeRelation = function(data){
+var makeRelation = function(data,className){
 
 	var temp = {
 		__op: 'AddRelation',
@@ -692,7 +706,7 @@ var makeRelation = function(data){
 
 		var r = {
 			__type: 'Pointer',
-			className: '_User',
+			className: className,
 			objectId: val.objectId
 		};
 
@@ -703,11 +717,11 @@ var makeRelation = function(data){
 	return temp;
 
 };
-var makePointer = function(data){
+var makePointer = function(data,className){
 
 	var temp = {
 		__type: 'Pointer',
-		className: '_User',
+		className: className,
 		objectId: data.objectId
 	};
 

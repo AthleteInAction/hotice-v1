@@ -2,6 +2,7 @@ var HomeCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 	function($scope,$routeParams,$location,ApiModel,$timeout){
 
 		$scope.articles = [];
+		$scope.events = [];
 		
 		$scope.getArticles = function(){
 
@@ -18,6 +19,21 @@ var HomeCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		};
 		$scope.getArticles();
+
+		$scope.getEvents = function(){
+
+			this.options = {
+				type: 'events'
+			};
+
+			ApiModel.query(this.options,function(data){
+				
+				$scope.events = data.body.results;
+
+			});
+
+		};
+		$scope.getEvents();
 
 	}
 ];

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     	resources :teams
       resources :notifications
       resources :online
+      resources :events
 
       get 'nhl/scores',to: 'nhl#scores'
       get 'nhl/headlines',to: 'nhl#headlines'

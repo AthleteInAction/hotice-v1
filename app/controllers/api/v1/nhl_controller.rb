@@ -48,7 +48,7 @@ module Api
 
         json['games'].each_with_index do |game,i|
 
-          final << game if i >= json['startIndex'].to_i && (game['ts'].to_s.downcase == 'today' || game['ts'].to_s.downcase == 'pre game' || game['tsc'].to_s.downcase == 'progress')
+          final << game if i >= json['startIndex'].to_i && (game['ts'].to_s.downcase == 'today' || game['ts'].to_s.downcase == 'pre game' || game['tsc'].to_s.downcase == 'progress' || game['tsc'].to_s.downcase == 'critical' || game['tsc'].to_s.downcase == 'final')
 
         end
 

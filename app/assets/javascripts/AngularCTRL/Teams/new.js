@@ -58,10 +58,10 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 				var team = angular.copy($scope.team);
 
-				team.creator = makePointer(team.creator);
-				team.admins = makeRelation(team.admins);
-				team.invited = makeRelation(team.invited);
-				team.confirmed = makeRelation(team.confirmed);
+				team.creator = makePointer(team.creator,'_User');
+				team.admins = makeRelation(team.admins,'_User');
+				team.invited = makeRelation(team.invited,'_User');
+				team.confirmed = makeRelation(team.confirmed,'_User');
 
 				var Team = new ApiModel({team: team});
 

@@ -1,0 +1,40 @@
+<div class="team_container">
+
+	<div class="name">{{event.title}}</div>
+	<div class="record">
+		<div class="LEFT">{{displayDate(event.start_date.iso).sDate}}</div>
+		<div class="RIGHT">
+			<!-- <input wambl-autocomplete="users" wambl-on-select="" wambl-on-click="" wambl-display-attr="gamertag" wambl-select-first="true" type="text" class="myteams" placeholder="Register one of your teams..." /> -->
+
+			<input type="text" class="myteams" placeholder="Register one of your teams..." wambl-autocomplete="myTeams" wambl-on-select="registerTeam(item)" wambl-on-click="registerTeam(item)" wambl-display-attr="name" wambl-select-first="true" ng:model="teamadder" wambl-exclude="event.registered" />
+
+		</div>
+		<div class="CLEAR"></div>
+	</div>
+
+	<div class="app_cont">
+
+		<div class="head">Registered Teams</div>
+		<div class="body NO_PAD">
+
+			<table class="teams_table">
+
+				<tr ng:if="!regLoaded">
+					<td>Loading...</td>
+				</tr>
+
+				<tr ng:if="event.registered == 0 && regLoaded">
+					<td>No teams registered</td>
+				</tr>
+	
+				<tr ng:repeat="team in event.registered | orderBy:'name'" ng:click="linkTo('/dashboard/#/teams/'+team.objectId)">
+					<td>{{team.name}}</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>

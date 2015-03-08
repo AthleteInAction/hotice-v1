@@ -6,9 +6,9 @@
 
 				<div class="tray">
 
-					<a href="" class="head">ENTER YOUR TEAM!</a>
-					<div class="sub">Enter your team into our first OTP tournament.</div>
-					<a href="" class="link">Register >></a>
+					<a href="/dashboard/#/events/QbpXiJZ7c4/registration" class="head">ENTER YOUR TEAM!</a>
+					<div class="sub">Enter your team into our first OTP Tournament.</div>
+					<a href="/dashboard/#/events/QbpXiJZ7c4/registration" class="link">Register >></a>
 
 				</div>
 
@@ -45,9 +45,14 @@
 				<div class="body NO_PAD">
 
 					<table class="news">
-						<tr>
+						<tr ng:if="events.length == 0">
 							<td>
-								<a href="{{article.link}}" target="_blank" class="F11">3/12/2015: Hockey Night in OTP Tournament</a>
+								<a href="" ng:click="" class="F11">Loading...</a>
+							</td>
+						</tr>
+						<tr ng:repeat="event in events | limitTo:10">
+							<td>
+								<a href="/dashboard/#/events/{{event.objectId}}/registration" class="F11">{{displayDate(event.start_date.iso).sDate}}:&nbsp;{{event.title}}</a>
 							</td>
 						</tr>
 					</table>

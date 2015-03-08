@@ -90,5 +90,17 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		};
 
+		$scope.displayDate = function(d){
+
+			var date = new Date(d);
+
+			var obj = {}
+
+			obj.sDate = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear();
+
+			return obj;
+
+		};
+
 	}
 ];

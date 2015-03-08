@@ -1,32 +1,83 @@
-<div class="scores_container">
-	<table class="scores">
-		<tr>
-	
-			<td class="arrow">
-				<button ng:click="scoreScroll(-1)"></button>
-			</td>
-			<td ng:repeat="game in displayScores">
-	
-				<div class="team">
-					<div class="LEFT">{{game.atn}}</div>
-					<div class="RIGHT">{{game.ats}}</div>
-					<div class="CLEAR"></div>
+<table class="home">
+	<tr>
+		<td>
+
+			<div class="main_article">
+
+				<div class="tray">
+
+					<a href="" class="head">ENTER YOUR TEAM!</a>
+					<div class="sub">Enter your team into our first OTP tournament.</div>
+					<a href="" class="link">Register >></a>
+
 				</div>
-	
-				<div class="team">
-					<div class="LEFT">{{game.htn}}</div>
-					<div class="RIGHT">{{game.hts}}</div>
-					<div class="CLEAR"></div>
+
+			</div>
+
+			<div class="app_cont">
+
+				<div class="head">NEWS</div>
+				<div class="body NO_PAD">
+
+					<table class="news">
+						<tr ng:if="articles.length == 0">
+							<td>
+								<a href="" ng:click="" class="F11">Loading...</a>
+							</td>
+						</tr>
+						<tr ng:repeat="article in articles | limitTo:20">
+							<td>
+								<a href="{{article.link}}" target="_blank" class="F14">{{article.title}}</a>
+							</td>
+						</tr>
+					</table>
+
 				</div>
-	
-				<div class="status" ng:if="game.bsc == 'progress'">{{game.ts}}</div>
-				<div class="status" ng:if="game.bsc != 'progress'">{{game.bs}}</div>
-	
-			</td>
-			<td class="arrow">
-				<button ng:click="scoreScroll(1)"></button>
-			</td>
-	
-		</tr>
-	</table>
-</div>
+
+			</div>
+
+		</td>
+		<td>
+
+			<div class="app_cont">
+
+				<div class="head">UPCOMING EVENTS</div>
+				<div class="body NO_PAD">
+
+					<table class="news">
+						<tr>
+							<td>
+								<a href="{{article.link}}" target="_blank" class="F11">3/12/2015: Hockey Night in OTP Tournament</a>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+			<div class="app_cont">
+
+				<div class="head">NHL HEADLINES</div>
+				<div class="body NO_PAD">
+
+					<table class="news">
+						<tr ng:if="articles.length == 0">
+							<td>
+								<a href="" ng:click="" class="F11">Loading...</a>
+							</td>
+						</tr>
+						<tr ng:repeat="article in articles | limitTo:10">
+							<td>
+								<a href="{{article.link}}" target="_blank" class="F11">{{article.title}}</a>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+		</td>
+	</tr>
+</table>

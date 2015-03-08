@@ -4,7 +4,7 @@ module Api
 
   		def scores
 
-        static = true
+        live = false
 
         path = "#{Rails.root}/log/scores.jsonp"
 
@@ -17,9 +17,15 @@ module Api
 
         if diff > 600# || true # 10 minutes
 
-          static = false
+          live = true
 
-          jsonp = Request.get('http://live.nhle.com/GameData/RegularSeasonScoreboardv3.jsonp')
+          jsonp = Request.get 'http://live.nhle.com/GameData/RegularSeasonScoreboardv3.jsonp'
+
+          File.open lastGetPath,'w+' do |f|
+
+            f.write Time.now.to_i.to_s
+
+          end
 
           if jsonp[:code] == 200
 
@@ -28,12 +34,6 @@ module Api
             File.open path,'w+' do |f|
 
               f.write new_json
-
-            end
-
-            File.open lastGetPath,'w+' do |f|
-
-              f.write Time.now.to_i.to_s
 
             end
 
@@ -48,17 +48,47 @@ module Api
 
         json['games'].each_with_index do |game,i|
 
-          final << game if i >= json['startIndex'].to_i
+          final << game if i >= json['startIndex'].to_i && (game['ts'].to_s.downcase == 'today' || game['ts'].to_s.downcase == 'pre game' || game['tsc'].to_s.downcase == 'progress')
 
         end
 
-        render json: {scores: final,static: static,diff: diff}
+        render json: {scores: final,live: live,diff: diff}
 
   		end
 
   		def headlines
 
+        live = false
+
   			# http://www.nhl.com/rss/news.xml
+        path = "#{Rails.root}/log/news.xml"
+
+        req = Request.get 'http://www.nhl.com/rss/news.xml'
+
+        if req[:code] == 200
+
+          live = true
+
+          pre = req[:body].force_encoding 'UTF-8'
+
+          File.open path,'w+' do |f|
+
+            f.write req[:body]
+
+          end
+
+        else
+
+
+
+        end
+
+        pre = File.read path
+
+        json = Crack::XML.parse pre
+        json[:live] = live
+
+        render json: json
 
   		end
 

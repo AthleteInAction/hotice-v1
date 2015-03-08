@@ -59,3 +59,4 @@ group :assets do
 end
 
 gem 'jwt'
+gem 'crack'

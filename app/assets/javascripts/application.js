@@ -32,6 +32,9 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 	}).when('/teams/new',{
 		templateUrl : '/angularjs/templates/teams_new.html',
 		controller: TeamsNewCtrl
+	}).when('/teams/:id',{
+		templateUrl : '/angularjs/templates/teams_show.html',
+		controller: TeamsShowCtrl
 	}).when('/teams',{
 		templateUrl : '/angularjs/templates/teams.html',
 		controller: TeamsCtrl
@@ -77,6 +80,74 @@ HotIce.config(['$httpProvider',function($httpProvider){
 // jQuery Datepicker
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
+HotIce.directive('scoreboard',['ApiModel',function(ApiModel){
+
+	return {
+
+		restrict: 'E',
+		scope: {},
+		templateUrl: '/angularjs/components/scoreboard.html',
+		replace: true,
+		link: function(scope,element,attrs){
+
+			var max = parseInt(attrs.games);
+			var o = 0;
+			var n = 0;
+			scope.scores = [];
+	
+			scope.getScores = function(){
+
+				JP('SCORES: '+new Date());
+	
+				this.options = {
+					type: 'nhl',
+					second: 'scores'
+				};
+	
+				ApiModel.query(this.options,function(data){
+	
+					scope.scores = data.scores;
+	
+					n = max - data.scores.length;
+	
+					for (i = 0; i < n; i++) {
+						
+						scope.scores.push({});
+	
+					}
+	
+					scope.scoreScroll(0);
+	
+				});
+	
+			};
+			scope.getScores();
+			setTimeout(function(){
+				scope.getScores();
+			},20000);
+	
+			scope.scoreScroll = function(dir){
+	
+				scope.displayScores = [];
+	
+				if ((o+dir) < (scope.scores.length - max + 1)){
+					o += dir
+				}
+				if (o < 0){o = 0;}
+	
+				for (i = 0; i < max; i++) {
+	
+					scope.displayScores.push(scope.scores[i+o]);
+	
+				}
+	
+			};
+
+		}
+
+	}
+
+}]);
 HotIce.directive('wamblAutocomplete',['$compile',function($compile){
     return {
     	restrict: 'A',

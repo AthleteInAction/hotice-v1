@@ -84,5 +84,11 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		},20000);
 
+		$scope.linkTo = function(loc){
+
+			window.location = loc;
+
+		};
+
 	}
 ];

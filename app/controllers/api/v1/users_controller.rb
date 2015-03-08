@@ -4,7 +4,7 @@ module Api
 
   		def index
 
-  			call = db.APICall path: '/users'
+  			call = db.APICall path: '/users',where: params[:constraints]
 
   			render json: call
 

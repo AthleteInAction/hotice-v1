@@ -6,4 +6,10 @@ class TemplatesController < ApplicationController
 
 	end
 
+	def component_template
+
+		render params[:template],layout: false
+
+	end
+
 end

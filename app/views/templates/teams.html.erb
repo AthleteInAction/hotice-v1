@@ -23,7 +23,7 @@
 				<td></td>
 			</tr>
 
-			<tr ng:repeat="team in teams | orderBy:sort:rev">
+			<tr ng:repeat="team in teams | orderBy:sort:rev" ng:click="linkTo('/dashboard/#/teams/'+team.objectId)">
 				<td>{{team.name}}</td>
 				<td>
 					{{team.wins}}

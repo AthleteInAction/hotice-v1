@@ -22,8 +22,9 @@ Rails.application.routes.draw do
     	resources :teams
       resources :notifications
       resources :online
-      
+
       get 'nhl/scores',to: 'nhl#scores'
+      get 'nhl/headlines',to: 'nhl#headlines'
 
       get 'sso/zendesk' => 'sso#zendesk'
       get 'sso/test' => 'sso#test'
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   # ////////////////////////////////////////////////////////////////
   # ////////////////////////////////////////////////////////////////
   get "angularjs/templates/:template" => 'templates#load_template'
+  get 'angularjs/components/:template' => 'templates#component_template'
   # ////////////////////////////////////////////////////////////////
   # ////////////////////////////////////////////////////////////////
 

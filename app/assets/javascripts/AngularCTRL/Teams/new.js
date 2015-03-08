@@ -162,16 +162,16 @@ Array.prototype.removeWhere = function(key,val){
     }
 
 }
-// Array.prototype.contains = function(key,val){
+Array.prototype.contains = function(key,val){
 	
-// 	var has = false;
+	var has = false;
 
-//     for (i = 0; i < this.length; i++) {
-//     	if (this[i][key] == val){
-//     		has = true;
-//     		break;
-//     	}
-//     }
+    for (i = 0; i < this.length; i++) {
+    	if (this[i][key] == val){
+    		has = true;
+    		break;
+    	}
+    }
 
-//     return has;
-// }
+    return has;
+}

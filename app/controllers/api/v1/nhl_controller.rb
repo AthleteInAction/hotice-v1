@@ -83,7 +83,7 @@ module Api
 
         req = Request.get 'http://www.nhl.com/rss/news.xml'
 
-        if req[:code] == 200
+        if req[:code] == 200 || !File.exists?(path)
 
           live = true
 

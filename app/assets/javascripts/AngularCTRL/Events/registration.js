@@ -62,35 +62,41 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 		$scope.registerTeam = function(item){
 
-			$scope.teamadder = null;
+			var message = 'By registering for this tournament, '+item.name+' agrees to the following:\n\n1: To show up to all event related activities\n\n2: Be on time to all event related activities\n\n3: Abide by all rules set by the event admin\n\nYou may always un-register befored the registration deadline.';
 
-			this.options = {
-				type: 'events',
-				id: $scope.params.id
-			};
+			if (confirm(message)){
 
-			var eventA = angular.copy($scope.event);
+				this.options = {
+					type: 'events',
+					id: $scope.params.id
+				};
+	
+				var eventA = angular.copy($scope.event);
+	
+				eventA.registered = {
+					__op: 'AddRelation',
+					objects: [
+						{
+							__type: 'Pointer',
+							className: 'Teams',
+							objectId: item.objectId
+						}
+					]
+				}
+	
+				var Register = new ApiModel({event: eventA});
+	
+				Register.$save(this.options,function(data){
+	
+					JP('REGISTER TEAM:');
+					JP(data);
+					$scope.event.registered.push(item);
+	
+				});
 
-			eventA.registered = {
-				__op: 'AddRelation',
-				objects: [
-					{
-						__type: 'Pointer',
-						className: 'Teams',
-						objectId: item.objectId
-					}
-				]
 			}
 
-			var Register = new ApiModel({event: eventA});
-
-			Register.$save(this.options,function(data){
-
-				JP('REGISTER TEAM:');
-				JP(data);
-				$scope.event.registered.push(item);
-
-			});
+			$scope.teamadder = null;
 
 		};
 

@@ -14,6 +14,7 @@ table.home tr td:first-child {
 }
 table.home tr td:last-child {
 	width: 255px;
+	min-width: 255px;
 }
 
 table.home tr td div.main_article {
@@ -95,11 +96,24 @@ table.news tr:last-child td {
 }
 table.news tr td a {
 	color: #c2c2c2;
-	display: block;
-	padding: 6px;
-	text-decoration: none;
-	background: #4d4c4c;
-	line-height: 1.4em;
+  	display: block;
+  	padding: 15px 9px 9px 9px;
+  	text-decoration: none;
+  	background: #4d4c4c;
+  	line-height: 1.4em;
+}
+table.news tr td a div.title {
+	font-size: 20px;
+	color: #FFAB4D;
+}
+table.news tr td a div.date span.pre,
+table.news tr td a div.date span.aft {
+	font-size: 13px;
+	color: #949494;
+}
+table.news tr td a:hover div.title {
+	color: #FFF;
+  	text-shadow: 0 0 3px #545454;
 }
 table.news tr td a:hover {
 	color: #FFF;

@@ -39,8 +39,11 @@ Rails.application.configure do
   APP_ID = 'pTgNnmnQSpIeZrFHrzWhdEHBsQpUJPiiFemsbUme'
   REST_KEY = 'X4YzW6g7pAq60pJCTAsQ3lfyOEQuEl1yznPLgixr'
 
-  # Zendesk
+  # Zendesk.com
   ZENDESK_DOMAIN = 'hotice11425586661'
   SHARED_SECRET = 'dXZFeNxFGAMFmCE5kLnynvo2njdDuMpWVFHSNSIhDZFhWVYf'
+  ZENDESK_USERNAME = 'wambltemp@gmail.com'
+  ZENDESK_TOKEN = 'qqCPvCXkb28JBm59lKGMUjE5baVtcy4JDfJhthLt'
+  ANNOUNCEMENTS_ID = 200651088
 
 end

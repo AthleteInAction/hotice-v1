@@ -41,14 +41,17 @@ module ParseAPI
       path = params[:path]
       method = params[:method] || 'GET'
       payload = params[:payload] || nil
+      extra_headers = params[:headers]
+      extra_headers = [] if !params[:headers]
       
-      params.delete(:method)
-      params.delete(:path)
-      params.delete(:payload)
+      params.delete :method
+      params.delete :path
+      params.delete :payload
+      params.delete :headers
       
       a = Time.now.to_f
       
-      http = Net::HTTP.new('api.parse.com',443)
+      http = Net::HTTP.new 'api.parse.com',443
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.use_ssl = true
       
@@ -61,6 +64,12 @@ module ParseAPI
       puts "\n\n"
 
       headers = {'X-Parse-Application-Id' => @infra[:application_id],'X-Parse-REST-API-Key' => @infra[:rest_key]}
+
+      extra_headers.each do |header|
+
+        headers = headers.merge header
+
+      end
       
       reqs = {
         'GET' => Net::HTTP::Get.new(uri,headers),

@@ -1,0 +1,36 @@
+<div class="app_cont">
+
+	<div class="breadcrumb">
+		<a href="/dashboard/#/">Home</a>
+		<span>&nbsp;>&nbsp;</span>
+		<span>Articles</span>
+	</div>
+
+	<div class="head">
+		<div class="LEFT">Articles</div>
+		<div class="CLEAR"></div>
+	</div>
+	<div class="body NO_PAD">
+
+		<table class="news">
+			<tr ng:if="articles.length == 0 || !articles">
+				<td>
+					<a href="" ng:click="" class="F11">Loading...</a>
+				</td>
+			</tr>
+			<tr ng:repeat="article in articles | limitTo:20">
+				<td>
+					<a href="/dashboard/#/articles/{{article.id}}" class="F14">
+						<div class="title">{{article.title}}</div>
+						<div class="date">
+							<span class="pre">Written:&nbsp;</span>
+							<span class="aft">{{displayDate(article.updated_at).sDate}}</span>
+						</div>
+					</a>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+</div>

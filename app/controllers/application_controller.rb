@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :db
 
+  def zd
+    zendesk = ZendeskAPI::Connect.new domain: ZENDESK_DOMAIN,username: ZENDESK_USERNAME,token: ZENDESK_TOKEN
+  end
+  helper_method :zd
+
   def current_user
     session[:user]
   end

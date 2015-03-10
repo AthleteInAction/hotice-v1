@@ -26,6 +26,8 @@ class SplashController < ApplicationController
 					email_list: params['email_list'],
 					gamertag: call[:body]['gamertag'],
 					objectId: call[:body]['objectId'],
+					gamertagVerified: call[:body]['gamertagVerified'],
+					verifyCode: call[:body]['verifyCode'],
 					sessionToken: call[:body]['sessionToken']
 				}
 
@@ -53,7 +55,9 @@ class SplashController < ApplicationController
 
 			if params[:password] && params[:password].to_s.length >= 4
 
-				call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password],email_list: params[:email_list]}
+				vcode = rand(100000..999999)
+
+				call = db.APICall path: '/users',method: 'POST',payload: {gamertag: params[:gamertag],username: params[:email],email: params[:email],password: params[:password],email_list: params[:email_list],verifyCode: vcode}
 
 			else 
 
@@ -74,6 +78,8 @@ class SplashController < ApplicationController
 					email_list: params['email_list'],
 					gamertag: params['gamertag'],
 					objectId: call[:body]['objectId'],
+					gamertagVerified: false,
+					verifyCode: vcode,
 					sessionToken: call[:body]['sessionToken']
 				}
 

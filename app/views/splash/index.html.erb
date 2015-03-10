@@ -23,17 +23,17 @@
 						<%= hidden_field_tag :zendesk,nil,value: 'true' %>
 					<% end %>
 					
-					<%= text_field_tag :gamertag,nil,class: "splash",placeholder: "Xbox Live Gamertag" %>
+					<%= text_field_tag :gamertag,nil,class: "splash",tabindex: 1,placeholder: "Xbox Live Gamertag" %>
 					<div class="splash_check">
 						<%= check_box_tag :gamertag_checked,true,true,disabled: true %>
 						<label>I acknowlegde the above gamertag belongs to me</label>
 					</div>
-					<%= text_field_tag :email,nil,class: "splash",placeholder: "Email" %>
+					<%= text_field_tag :email,nil,class: "splash",tabindex: 2,placeholder: "Email" %>
 					<div class="splash_check">
 						<%= check_box_tag :email_list,true,true %>
 						<label>We don't send you emails!</label>
 					</div>
-					<%= password_field_tag :password,nil,class: "splash",placeholder: "Create Password" %>
+					<%= password_field_tag :password,nil,class: "splash",tabindex: 3,placeholder: "Create Password" %>
 					<div class="splash_check">
 						<label>Password must be at least 4 characters</label>
 					</div>

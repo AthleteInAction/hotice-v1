@@ -1,0 +1,39 @@
+<div class="app_cont">
+
+	<div class="breadcrumb">
+		<a href="/dashboard/#/">Home</a>
+		<span>&nbsp;>&nbsp;</span>
+		<span>Members</span>
+	</div>
+
+	<div class="head">
+		<div class="LEFT">Members</div>
+		<div class="mini RIGHT">
+			<input type="text" placeholder="Filter..." class="filter" ng:change="filterUsers()" ng:model="filter" />
+			<!-- <select ng:model="sort" ng:init="sort = 'gamertag'" ng:change="doSort()">
+				<option value="gamertag">Sort by:</option>
+				<option value="gamertag">Gamertag</option>
+			</select> -->
+		</div>
+		<div class="CLEAR"></div>
+	</div>
+	<div class="body NO_PAD">
+
+		<table class="teams_table">
+
+			<tr ng:if="loading">
+				<td>Loading...</td>
+			</tr>
+
+			<tr>
+				<td>{{current_user.gamertag}}</td>
+			</tr>
+			<tr ng:repeat="member in members | orderBy:sort" ng:click="">
+				<td>{{member.gamertag}}</td>
+			</tr>
+
+		</table>
+
+	</div>
+
+</div>

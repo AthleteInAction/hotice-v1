@@ -23,14 +23,7 @@
 			</td>
 			<td class="in" valign="middle" align="right">
 
-				<div class="toolbar LEFT">
-
-					
-
-				</div>
-
 				<a href="/signout" class="orange_link">Sign Out</a>
-				<a href="#" class="orange_link"><%= current_user['gamertag'] || current_user['email'] %></a>
 				<div class="CLEAR"></div>
 
 			</td>
@@ -41,25 +34,21 @@
 
 				<div class="create_team"><a href="/dashboard/#/teams/new">+ Create a Team</a></div>
 
-				<ul class="nav">
-					<li ng:repeat="notification in notifications">
-						<div class="ncont">
+				<ul class="navigation">
 
-							<div class="message" ng-bind-html="notification.message"></div>
-							<div class="options">
-								<a href="" class="button" ng:click="handleNotification(notification,true)">Accept</a>
-								<a href="" class="button" ng:click="handleNotification(notification,false)">Decline</a>
-							</div>
+					<li class="icon-home"><a href="/dashboard/#/">Home</a></li>
+					<li class="icon-events"><a href="/dashboard/#/events/QbpXiJZ7c4/registration">Events</a></li>
+					<li class="icon-teams"><a href="/dashboard/#/teams">Teams</a></li>
+					<li class="icon-members"><a href="/dashboard/#/members">Members</a></li>
+					<li class="icon-myaccount"><a href="/dashboard/#/myaccount" ng:class="{alert:!current_user.gamertagVerified,check:current_user.gamertagVerified}">{{current_user.gamertag}}</a></li>
 
-						</div>
-					</li>
 				</ul>
-				<div class="nav_killer"></div>
+				<div class="input_error SQUARE" ng:if="!current_user.gamertagVerified">Your gamertag needs to be verified</div>
 
 			</td>
 			<td class="in" valign="top">
 
-				<scoreboard games="7"></scoreboard>
+				<scoreboard games="7" interval="10"></scoreboard>
 
 				<div class="view_container"><div ng:view></div></div>
 

@@ -1,2 +1,0 @@
-class NhlController < ApplicationController
-end

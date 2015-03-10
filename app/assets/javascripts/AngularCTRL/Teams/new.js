@@ -67,9 +67,7 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 				Team.$create({type: 'teams'},function(data){
 
-					// window.location = '/dashboard/#/teams/myteams';
-					console.log(data);
-					$scope.submitting = false;
+					window.location = '/dashboard/#/teams/'+data.call.body.objectId;
 
 				});
 

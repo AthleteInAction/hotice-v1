@@ -44,6 +44,20 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 	}).when('/events/:id/registration',{
 		templateUrl : '/angularjs/templates/event_registration.html',
 		controller: EventRegistrationCtrl
+	}).when('/members',{
+		templateUrl : '/angularjs/templates/members.html',
+		controller: MembersCtrl
+	}).when('/eashl/search',{
+		templateUrl : '/angularjs/templates/eashl_search.html'
+	}).when('/articles',{
+		templateUrl : '/angularjs/templates/articles.html',
+		controller: ArticlesCtrl
+	}).when('/articles/:id',{
+		templateUrl : '/angularjs/templates/articles_show.html',
+		controller: ArticlesShowCtrl
+	}).when('/myaccount',{
+		templateUrl : '/angularjs/templates/myaccount.html',
+		controller: MyAccountCtrl
 	}).otherwise({
 		redirectTo: '/home'
 	});
@@ -56,11 +70,12 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 HotIce.factory('ApiModel',[
 	'$resource',function($resource){
-		return $resource("/api/v1/:type/:id/:extend/:second.json",
+		return $resource("/api/v1/:type/:sub/:id/:extend/:second.json",
 			{
 				id: '@id',
 				extend: '@extend',
-				second: '@second'
+				second: '@second',
+				sub: '@sub'
 			},
 			{
 				get: {method: 'GET'},
@@ -99,8 +114,6 @@ HotIce.directive('scoreboard',['ApiModel','$interval',function(ApiModel,$interva
 			scope.scores = [];
 	
 			scope.getScores = function(){
-
-				JP('SCORES: '+new Date());
 	
 				this.options = {
 					type: 'nhl',
@@ -110,7 +123,6 @@ HotIce.directive('scoreboard',['ApiModel','$interval',function(ApiModel,$interva
 				ApiModel.query(this.options,function(data){
 	
 					scope.scores = data.scores;
-					JP(data.diff/60);
 	
 					n = max - data.scores.length;
 	
@@ -146,6 +158,16 @@ HotIce.directive('scoreboard',['ApiModel','$interval',function(ApiModel,$interva
 				}
 	
 			};
+
+			// if (attrs.interval){
+
+			// 	$interval(function(){
+
+			// 		scope.scoreScroll(1);
+
+			// 	},parseInt(attrs.interval)*1000);
+
+			// };
 
 		}
 
@@ -443,19 +465,29 @@ HotIce.directive('shiftsubmit',function(){
 
 	}
 });
-HotIce.directive('onenter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
+HotIce.directive('onenter',function(){
+	return {
 
-            if(event.which === 13 && !event.shiftKey) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.onenter);
-                });
+		restrict: 'A',
+    	link: function(scope,element,attrs){
+	
+    	    element.bind('keyup',function(event){
+	
+    	    	if(event.which === 13 && !event.shiftKey){
+	
+    	    		scope.$apply(function (){
+    	    			scope.$eval(attrs.onenter);
+    	    		});
+	
+    	    		event.preventDefault();
+	
+    	    	}
+	
+    	    });
+	
+    	}
 
-                event.preventDefault();
-            }
-        });
-    };
+    }
 });
 HotIce.directive('notblank',function(){
     return function(scope,element,attrs){
@@ -563,6 +595,17 @@ function days_between(date1,date2) {
 }
 
 var emailValidate = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+var validateEmail = function(email){
+
+	if (emailValidate.test(email)){
+		
+		return false;
+
+	};
+
+	return true;
+
+};
 var months = [
 	{
 		number: 0,

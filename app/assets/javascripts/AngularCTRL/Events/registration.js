@@ -15,7 +15,6 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 			ApiModel.query(this.options,function(data){
 
-				JP(data);
 				$scope.event = data.body.results[0];
 				$scope.event.registered = [];
 				$scope.event.confirmed = [];
@@ -51,8 +50,6 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 			ApiModel.query(this.options,function(data){
 
-				JP('REGISTERED');
-				JP(data);
 				$scope.event.registered = data.body.results;
 				$scope.regLoaded = true;
 
@@ -87,9 +84,7 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 				var Register = new ApiModel({event: eventA});
 	
 				Register.$save(this.options,function(data){
-	
-					JP('REGISTER TEAM:');
-					JP(data);
+					
 					$scope.event.registered.push(item);
 	
 				});

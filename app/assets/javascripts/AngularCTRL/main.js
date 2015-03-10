@@ -1,5 +1,13 @@
-var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
-	function($scope,$routeParams,$location,ApiModel,$timeout){
+var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$interval',
+	function($scope,$routeParams,$location,ApiModel,$timeout,$interval){
+
+		$scope.current_user = current_user;
+
+		$scope.$on('$routeChangeSuccess',function (event,current,previous,rejection){
+
+
+			
+		});
 
 		zE(function(){
 			var zduser = {
@@ -9,6 +17,31 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			};
 			zE.identify(zduser);
 		});
+
+		$scope.refreshUser = function(){
+
+			this.options = {
+				type: 'users',
+				sub: 'me'
+			};
+
+			ApiModel.query(this.options,function(data){
+
+				current_user = data.body;
+				$scope.current_user = current_user;
+
+			});
+
+		};
+
+		if (!current_user.gamertagVerified){
+			$scope.refreshUser();
+			setInterval(function(){
+				if (!current_user.gamertagVerified){
+					$scope.refreshUser();
+				}
+			},20000);
+		}
 
 		$scope.getUsers = function(complete){
 
@@ -27,13 +60,13 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		};
 		$scope.getUsers(function(users){
+			
 			$scope.users = users;
+
 		});
 
 
 		$scope.getNotifications = function(complete){
-
-			JP('NOTIFICATIONS: '+new Date());
 
 			this.options = {
 				type: 'notifications'
@@ -53,14 +86,11 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		$scope.handleNotification = function(notification,accepted){
 
-			JP(notification);
-			JP(accepted)
+			
 
 		};
 
 		$scope.getOnlineUsers = function(){
-
-			JP('ONLINE USERS: '+new Date());
 
 			this.options = {
 				type: 'online'
@@ -101,6 +131,23 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			return obj;
 
 		};
+
+		$scope.getAnnouncements = function(){
+
+			this.options = {
+				type: 'zendesk',
+				second: 'articles',
+				section: 200651088
+			};
+
+			ApiModel.query(this.options,function(data){
+				
+				$scope.announcements = data.body.articles;
+
+			});
+
+		};
+		$scope.getAnnouncements();
 
 	}
 ];

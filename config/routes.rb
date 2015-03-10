@@ -24,6 +24,12 @@ Rails.application.routes.draw do
       resources :online
       resources :events
 
+      namespace :zendesk do
+
+        resources :articles
+
+      end
+
       get 'nhl/scores',to: 'nhl#scores'
       get 'nhl/headlines',to: 'nhl#headlines'
 

@@ -1,5 +1,15 @@
 <div class="team_container">
 
+	<div class="breadcrumb">
+		<a href="/dashboard/#/">Home</a>
+		<span>&nbsp;>&nbsp;</span>
+		<a href="/dashboard/#/events/{{event.objectId}}/registration">Events</a>
+		<span>&nbsp;>&nbsp;</span>
+		<a href="/dashboard/#/events/{{event.objectId}}/registration">{{event.title}}</a>
+		<span>&nbsp;>&nbsp;</span>
+		<span>Registration</span>
+	</div>
+
 	<div class="name">{{event.title}}</div>
 	<div class="record">
 		<div class="LEFT">{{displayDate(event.start_date.iso).sDate}}</div>

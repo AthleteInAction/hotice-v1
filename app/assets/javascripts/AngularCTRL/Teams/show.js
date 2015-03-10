@@ -18,7 +18,6 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			ApiModel.query(this.options,function(data){
 
-				JP(data);
 				$scope.team = data.body.results[0];
 				$scope.getConfirmed();
 				$scope.getAdmins();
@@ -38,7 +37,6 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			ApiModel.query(this.options,function(data){
 
-				JP('Confirmed',data);
 				$scope.team.confirmed = data.body.results;
 
 			});
@@ -53,7 +51,6 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			ApiModel.query(this.options,function(data){
 
-				JP('Admins',data);
 				$scope.team.admins = data.body.results;
 				$scope.i_am_admin = $scope.team.admins.contains('objectId',current_user.objectId);
 
@@ -69,7 +66,6 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			ApiModel.query(this.options,function(data){
 
-				JP('Invited',data);
 				$scope.team.invited = data.body.results;
 
 			});

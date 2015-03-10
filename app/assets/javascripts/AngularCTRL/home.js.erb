@@ -35,5 +35,22 @@ var HomeCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 		};
 		$scope.getEvents();
 
+		$scope.getAnnouncements = function(){
+
+			this.options = {
+				type: 'zendesk',
+				second: 'articles',
+				section: <%= ANNOUNCEMENTS_ID %>
+			};
+
+			ApiModel.query(this.options,function(data){
+				
+				$scope.$parent.announcements = data.body.articles;
+
+			});
+
+		};
+		$scope.getAnnouncements();
+
 	}
 ];

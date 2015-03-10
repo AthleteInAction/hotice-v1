@@ -2,6 +2,7 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 	function($scope,$routeParams,$location,ApiModel,$timeout,$interval){
 
 		$scope.current_user = current_user;
+		$scope.announcements = [];
 
 		$scope.$on('$routeChangeSuccess',function (event,current,previous,rejection){
 
@@ -131,23 +132,6 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 			return obj;
 
 		};
-
-		$scope.getAnnouncements = function(){
-
-			this.options = {
-				type: 'zendesk',
-				second: 'articles',
-				section: 200651088
-			};
-
-			ApiModel.query(this.options,function(data){
-				
-				$scope.announcements = data.body.articles;
-
-			});
-
-		};
-		$scope.getAnnouncements();
 
 	}
 ];

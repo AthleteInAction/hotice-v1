@@ -11,15 +11,12 @@
 	</div>
 
 	<div class="name">{{event.title}}</div>
+	<div class="date">{{displayDate(event.start_date.iso).fString}}</div>
+	<div class="reg_date">Registration Deadline:&nbsp;{{displayDate(event.reg_date.iso).fString}}</div>
+
 	<div class="record">
-		<div class="LEFT">{{displayDate(event.start_date.iso).sDate}}</div>
-		<div class="RIGHT">
-			<!-- <input wambl-autocomplete="users" wambl-on-select="" wambl-on-click="" wambl-display-attr="gamertag" wambl-select-first="true" type="text" class="myteams" placeholder="Register one of your teams..." /> -->
-
-			<input type="text" class="myteams" placeholder="Register one of your teams..." wambl-autocomplete="myTeams" wambl-on-select="registerTeam(item)" wambl-on-click="registerTeam(item)" wambl-display-attr="name" wambl-select-first="false" ng:model="teamadder" wambl-exclude="event.registered" />
-
-		</div>
-		<div class="CLEAR"></div>
+		<input type="text" class="myteams FULL" placeholder="Register one of your teams..." wambl-autocomplete="myTeams" wambl-on-select="registerTeam(item)" wambl-on-click="registerTeam(item)" wambl-display-attr="name" wambl-select-first="false" ng:model="teamadder" wambl-exclude="event.registered" />
+		<div class="article" ng-bind-html="event.article.body"></div>
 	</div>
 
 	<div class="app_cont">

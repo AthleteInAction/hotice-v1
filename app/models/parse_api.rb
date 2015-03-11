@@ -58,10 +58,10 @@ module ParseAPI
       uri = %{/1#{path}}
       uri << '?'+params.map{ |key,val| "#{key}=#{val}" }.join('&') if params && params.count > 0
       uri = URI.escape uri
-      puts "\n\n"
-      puts "------"*10
-      puts uri
-      puts "\n\n"
+      # puts "\n\n"
+      # puts "------"*10
+      # puts uri
+      # puts "\n\n"
 
       headers = {'X-Parse-Application-Id' => @infra[:application_id],'X-Parse-REST-API-Key' => @infra[:rest_key]}
 

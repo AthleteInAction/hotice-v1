@@ -29,9 +29,13 @@ module Api
   						sessionToken: call[:body]['sessionToken']
   					}
 
-  				end
+            render json: {user: session[:user]},status: call[:code].to_i
 
-  				render json: call,status: call[:code].to_i
+          else
+
+            render json: call,status: call[:code].to_i
+
+  				end
 
   			else
 

@@ -28,7 +28,7 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 
 			ApiModel.query(this.options,function(data){
 
-				current_user = data.body;
+				current_user = data.user;
 				$scope.current_user = current_user;
 
 			});
@@ -123,11 +123,41 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 
 		$scope.displayDate = function(d){
 
+			var obj = {
+				sDate: '',
+				fString: ''
+			}
+
+			if (new Date(d).getDay()){
+				
+			} else {return obj;}
+
 			var date = new Date(d);
 
-			var obj = {}
+			var h = date.getHours();
+			var m = date.getMinutes()+'';
+			var M = date.getMonth();
+			var D = date.getDate();
+			var Y = date.getFullYear();
+			var dotw = date.getDay();
 
-			obj.sDate = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear();
+			if (m.length < 2){
+				m = '0'+m;
+			}
+			var ap = 'am';
+
+			if (h >= 12){
+				ap = 'pm';
+			}
+
+			if (h > 12){
+				h -= 12;
+			}
+
+			var time = h+':'+m+' '+ap;
+
+			obj.sDate = (M+1)+'/'+D+'/'+Y+' '+time;
+			obj.fString = days[dotw].long+' '+months[M].long+', '+D+', '+Y+' '+time;
 
 			return obj;
 

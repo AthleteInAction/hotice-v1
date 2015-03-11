@@ -22,8 +22,15 @@
 
 		<table class="teams_table">
 
-			<tr ng:if="teams.length == 0">
+			<tr ng:if="loading">
 				<td>Loading...</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr ng:if="teams.length == 0 && !loading">
+				<td>No teams to display</td>
 				<td></td>
 				<td></td>
 				<td></td>

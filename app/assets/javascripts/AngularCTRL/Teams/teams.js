@@ -5,10 +5,13 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		$scope.sort = 'name';
 		$scope.rev = false;
+		$scope.loading = false;
 
 		$scope.teams = [];
 
 		$scope.getTeams = function(){
+
+			$scope.loading = true;
 
 			this.options = {
 				type: 'teams'
@@ -17,6 +20,7 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			ApiModel.query(this.options,function(data){
 
 				$scope.teams = data.body.results;
+				$scope.loading = false;
 
 			});
 

@@ -40,6 +40,8 @@ module Api
 
   				else
 
+            item['user'][:diff] = diff
+
   					users << item['user'] if item['user']['objectId'] != session[:user]['objectId']
 
   				end
@@ -52,7 +54,7 @@ module Api
 
   			new_json = new_json.merge time: (((Time.now.to_f-r)*100000).round.to_f/100000).to_f
 
-  			render json: {results: users}
+  			render json: {results: new_json}
 
   		end
 

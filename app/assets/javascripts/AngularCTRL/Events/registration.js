@@ -18,12 +18,30 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 				$scope.event = data.body.results[0];
 				$scope.event.registered = [];
 				$scope.event.confirmed = [];
+				if ($scope.event.articleId){$scope.getArticle();}
 				$scope.getRegistered();
 
 			});
 
 		};
 		$scope.getEvent();
+
+		$scope.getArticle = function(){
+
+			this.options = {
+				type: 'zendesk',
+				sub: 'articles',
+				id: $scope.event.articleId
+			};
+
+			ApiModel.query(this.options,function(data){
+
+				JP('ARTICLE');
+				$scope.event.article = data.body.article;
+
+			});
+
+		};
 
 		$scope.getMyTeams = function(){
 

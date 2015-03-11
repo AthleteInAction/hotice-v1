@@ -66,15 +66,46 @@ div.app_cont {
 	background: #323232;*/
 }
 div.app_cont div.head {
-	border-radius: 7px 7px 0 0;
-	/*border: solid 1px #F9F9F9;*/
+	/*border-radius: 7px 7px 0 0;
 	background: #50DDE8;
 	padding: 16px 20px 10px 20px;
 	font-size: 30px;
 	text-shadow: 1px 1px 1px #000000;
 	color: #FFFFFF;
 	font-style: italic;
-	font-weight: 400;
+	font-weight: 400;*/
+	border-radius: 7px 7px 0 0;
+  	background-color: #50DDE8;
+  	padding: 19px 16px 12px 50px;
+  	font-size: 30px;
+  	text-shadow: 0 0 0;
+  	color: #373737;
+  	font-style: normal;
+  	font-weight: 300;
+}
+div.app_cont div.head.head-icon-news {
+	background-image: url(<%= asset_path 'head-icon-news.png' %>);
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	background-position: 13px center;
+}
+div.app_cont div.head.head-icon-events {
+	background-image: url(<%= asset_path 'head-icon-events.png' %>);
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	background-position: 13px center;
+}
+div.app_cont div.head.head-icon-members {
+	background-image: url(<%= asset_path 'head-icon-members.png' %>);
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	background-position: 13px center;
+}
+div.app_cont div.head.head-icon-teams {
+	background-image: url(<%= asset_path 'head-icon-teams.png' %>);
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	background-position: 13px center;
 }
 div.app_cont div.head div.mini {
 	color: #FC0;

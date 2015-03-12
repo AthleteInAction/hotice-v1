@@ -26,7 +26,7 @@ module Api
 
   			else
 
-  				redirect_to "/?return_to=#{ params[:return_to]}&zendesk=true&iat=#{params[:timestamp]}"
+  				redirect_to "/access/normal?return_to=#{ params[:return_to]}&zendesk=true&iat=#{params[:timestamp]}"
   				# render json: params
 
   			end

@@ -12,9 +12,17 @@ class VerifyController < ApplicationController
 
 	end
 
+	def reset_password_do
+
+		call = db.APICall method: 'POST',path: '/requestPasswordReset',payload: {email: params[:email]}
+
+		render json: call
+
+	end
+
 	def password_changed
 
-		render layout: false		
+		render layout: 'splash'
 
 	end
 
@@ -26,7 +34,7 @@ class VerifyController < ApplicationController
 
 	def invalid_link
 
-		render layout: false
+		render layout: 'splash'
 
 	end
 

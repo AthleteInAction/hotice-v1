@@ -12,6 +12,14 @@ Rails.application.routes.draw do
 
   get '/signout', to: 'sessions#destroy'
 
+  # Access
+  # ======================================================
+  # ======================================================
+  get '/access/normal',to: 'access#normal'
+  post '/access/normal',to: 'access#create'
+  # ======================================================
+  # ======================================================
+
   # API
   # ////////////////////////////////////////////////////////////////
   # ////////////////////////////////////////////////////////////////
@@ -57,6 +65,7 @@ Rails.application.routes.draw do
   get 'verify/invalid' => 'verify#invalid_link'
   get 'verify/password/changed' => 'verify#password_changed'
   get 'verify/password/reset' => 'verify#reset_password'
+  post 'verify/password/reset' => 'verify#reset_password_do'
   # ////////////////////////////////////////////////////////////////
   # ////////////////////////////////////////////////////////////////
 

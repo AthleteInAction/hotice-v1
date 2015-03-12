@@ -83,4 +83,31 @@ class AccessController < ApplicationController
 	# ======================================================
 	# ======================================================
 
+
+	def password_reset
+
+		render layout: 'splash'
+
+	end
+
+	def password_reset_do
+
+		call = db.APICall method: 'POST',path: '/requestPasswordReset',payload: {email: params[:email]}
+
+		if call[:code].to_i == 200
+
+			@error = nil
+			@alert = "An email was sent to #{params[:email]} with a link to reset your password."
+
+		else
+
+			@error = 'An error occured'
+			@alert = nil
+
+		end
+
+		render 'password_reset',layout: 'splash'
+
+	end
+
 end

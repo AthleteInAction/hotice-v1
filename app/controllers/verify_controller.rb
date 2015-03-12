@@ -6,7 +6,7 @@ class VerifyController < ApplicationController
 
 	end
 
-	def reset_password
+	def choose_password
 
 		render layout: false
 
@@ -22,7 +22,7 @@ class VerifyController < ApplicationController
 
 	def password_changed
 
-		render layout: 'splash'
+		render layout: false
 
 	end
 
@@ -34,7 +34,7 @@ class VerifyController < ApplicationController
 
 	def invalid_link
 
-		render layout: 'splash'
+		render layout: false
 
 	end
 

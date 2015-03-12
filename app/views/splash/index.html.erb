@@ -16,7 +16,7 @@
 
 			<div class="splash_form">
 
-				<%= form_tag "/", method: :post,autocomplete: 'off' do %>
+				<%= form_tag "/", method: :post,autocomplete: 'false' do %>
 
 					<% if params[:zendesk] == 'true' %>
 						<%= hidden_field_tag :return_to,nil,value: params[:return_to] %>

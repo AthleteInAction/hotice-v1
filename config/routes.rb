@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   # ======================================================
   get '/access/normal',to: 'access#normal'
   post '/access/normal',to: 'access#create'
+  get '/access/password/reset',to: 'access#password_reset'
+  post '/access/password/reset',to: 'access#password_reset_do'
   # ======================================================
   # ======================================================
 
@@ -64,8 +66,7 @@ Rails.application.routes.draw do
   get 'verify/email/success' => 'verify#email_verified'
   get 'verify/invalid' => 'verify#invalid_link'
   get 'verify/password/changed' => 'verify#password_changed'
-  get 'verify/password/reset' => 'verify#reset_password'
-  post 'verify/password/reset' => 'verify#reset_password_do'
+  get 'verify/password/reset' => 'verify#choose_password'
   # ////////////////////////////////////////////////////////////////
   # ////////////////////////////////////////////////////////////////
 

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resources :notifications
       resources :online
       resources :events
+      # TEST STUFF
+      resources :test
 
       namespace :zendesk do
 

@@ -1,14 +1,20 @@
-<div class="app_cont">
+<div class="template_container">
 
 	<div class="breadcrumb">
 		<a href="/dashboard/#/">Home</a>
-		<span>&nbsp;>&nbsp;</span>
-		<span>Teams</span>
+		<span class="arrow">&nbsp;>&nbsp;</span>
+		<span class="ORANGE">Teams</span>
 	</div>
 
-	<div class="head head-icon-teams">
-		<div class="LEFT">Teams</div>
-		<div class="mini RIGHT">
+	<div class="head">
+		<div class="head-item head-icon-teams">Teams</div>
+		<div class="head-item">
+			<select ng:model="allteams">
+				<option value="false">My Teams</option>
+				<option value="true">All Teams</option>
+			</select>
+		</div>
+		<div class="head-item">
 			<select ng:model="sort" ng:change="teamSort()">
 				<option value="name">Sort by:</option>
 				<option value="wins">Wins</option>
@@ -16,12 +22,18 @@
 				<option value="otl">OTL</option>
 			</select>
 		</div>
-		<div class="CLEAR"></div>
 	</div>
 	<div class="body NO_PAD">
 
-		<table class="teams_table">
+		<table class="table">
 
+			<tr>
+				<th>Team</th>
+				<th>Wins</th>
+				<th>Losses</th>
+				<th>OTL</th>
+			</tr>
+			
 			<tr ng:if="loading">
 				<td>Loading...</td>
 				<td></td>
@@ -37,18 +49,16 @@
 			</tr>
 
 			<tr ng:repeat="team in teams | orderBy:sort:rev" ng:click="linkTo('/dashboard/#/teams/'+team.objectId)">
-				<td>{{team.name}}</td>
 				<td>
-					{{team.wins}}
-					<div class="mini">W</div>
+					<a href="/dashboard/#/teams/{{team.team.objectId}}">{{team.team.name}}</a></td>
+				<td>
+					{{team.team.wins}}
 				</td>
 				<td>
-					{{team.losses}}
-					<div class="mini">L</div>
+					{{team.team.losses}}
 				</td>
 				<td>
-					{{team.otl}}
-					<div class="mini">OTL</div>
+					{{team.team.otl}}
 				</td>
 			</tr>
 

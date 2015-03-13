@@ -156,7 +156,8 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 
 			var time = h+':'+m+' '+ap;
 
-			obj.sDate = (M+1)+'/'+D+'/'+Y+' '+time;
+			obj.sDay = (M+1)+'/'+D+'/'+Y;
+			obj.sDate = obj.sDay+' '+time;
 			obj.fString = days[dotw].long+' '+months[M].long+', '+D+', '+Y+' '+time;
 
 			return obj;

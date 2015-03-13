@@ -14,12 +14,14 @@
 
 			</div>
 
-			<div class="app_cont">
+			<div class="template_container NO_MARGIN">
 
-				<div class="head head-icon-news">Message Board</div>
+				<div class="head small">
+					<div class="head-item head-icon-news">Message Board</div>
+				</div>
 				<div class="body NO_PAD">
 
-					<table class="news">
+					<table class="table small">
 						<tr ng:if="announcements.length == 0">
 							<td>
 								<a href="" ng:click="" class="F11">Loading...</a>
@@ -27,14 +29,13 @@
 						</tr>
 						<tr ng:repeat="article in announcements | limitTo:20">
 							<td>
-								<a href="/dashboard/#/articles/{{article.id}}" class="F14">
-									<div class="title">{{article.title}}</div>
-									<div class="date">
-										<span class="pre">Written:&nbsp;</span>
-										<span class="aft">{{displayDate(article.updated_at).sDate}}</span>
-									</div>
 
-								</a>
+								<a href="">{{article.title}}</a>
+								<div class="date">
+									<span class="pre">Written:&nbsp;</span>
+									<span class="aft">{{displayDate(article.updated_at).sDate}}</span>
+								</div>
+
 							</td>
 						</tr>
 					</table>
@@ -46,20 +47,20 @@
 		</td>
 		<td>
 
-			<div class="app_cont">
+			<div class="template_container NO_MARGIN">
 
-				<div class="head head-icon-events">Upcoming Events</div>
+				<div class="head small">
+					<div class="head-item head-icon-events">Upcoming Events</div>
+				</div>
 				<div class="body NO_PAD">
 
-					<table class="news">
+					<table class="table small">
 						<tr ng:if="events.length == 0">
-							<td>
-								<a href="" ng:click="" class="F11">Loading...</a>
-							</td>
+							<td class="F11">Loading...</td>
 						</tr>
 						<tr ng:repeat="event in events | limitTo:10">
 							<td>
-								<a href="/dashboard/#/events/{{event.objectId}}/registration" class="F11">{{displayDate(event.start_date.iso).sDate}}:&nbsp;{{event.title}}</a>
+								<a href="/dashboard/#/events/{{event.objectId}}/registration" class="F11">{{displayDate(event.start_date.iso).sDay}}:&nbsp;{{event.title}}</a>
 							</td>
 						</tr>
 					</table>
@@ -68,16 +69,16 @@
 
 			</div>
 
-			<div class="app_cont">
+			<div class="template_container T20">
 
-				<div class="head head-icon-news">NHL Headlines</div>
+				<div class="head small">
+					<div class="head-item head-icon-news">NHL Headlines</div>
+				</div>
 				<div class="body NO_PAD">
 
-					<table class="news">
+					<table class="table">
 						<tr ng:if="articles.length == 0">
-							<td>
-								<a href="" ng:click="" class="F11">Loading...</a>
-							</td>
+							<td class="F11">Loading...</td>
 						</tr>
 						<tr ng:repeat="article in articles | limitTo:10">
 							<td>

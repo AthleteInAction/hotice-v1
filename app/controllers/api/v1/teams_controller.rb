@@ -4,7 +4,7 @@ module Api
 
   		def index
 
-  			call = db.APICall path: '/classes/Teams',where: params[:constraints]
+  			call = db.APICall path: '/classes/Relations',where: {type: 'team'}.to_json,include: 'team,user'
 
   			render json: call
 
@@ -14,47 +14,28 @@ module Api
 
         params[:team][:name_i] = params[:team][:name].to_s.downcase
 
-  			call = db.APICall path: '/classes/Teams',method: 'POST',payload: params[:team]
+  			call_1 = db.APICall path: '/classes/Teams',method: 'POST',payload: params[:team]
 
-        invite = {
-          type: :team,
-          userId: ''
+        r = {
+          team: {
+            '__type' => 'Pointer',
+            'className' => 'Teams',
+            'objectId' => call_1[:body]['objectId']
+          },
+          user: params[:team][:creator],
+          type: 'team',
+          admin: true
         }
 
-        invities = []
-        requests = []
-        params[:team][:invited][:objects].each do |user|
+        call_2 = db.APICall path: '/classes/Relations',method: 'POST',payload: r
 
-          request = {
-            method: 'POST',
-            path: '/1/classes/Notifications',
-            body: {
-              type: 'team',
-              status: 'pending',
-              relatedId: call[:body]['objectId'],
-              userId: {
-                __type: 'Pointer',
-                className: '_User',
-                objectId: user[:objectId]
-              },
-              message: "<span class=\"ruby_highlight\">#{params[:team][:name]}</span> invited you to join their team."
-
-            }
-          }
-
-          requests << request# if user[:objectId] != session[:user]['objectId']
-
-        end
-
-        batch = db.APICall path: '/batch',method: 'POST',payload: {requests: requests}
-
-  			render json: {call: call,batch: batch}
+  			render json: {call_1: call_1,call_2: call_2}
 
   		end
 
       def show
 
-        call = db.APICall path: '/classes/Teams',where: {objectId: params[:id]}.to_json
+        call = db.APICall path: '/classes/Relations',where: {type: 'team',team: {'__type' => 'Pointer','className' => 'Teams','objectId' => params[:id]}}.to_json,include: 'team,user'
 
         render json: call
 

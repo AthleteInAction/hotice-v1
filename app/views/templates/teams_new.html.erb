@@ -1,14 +1,16 @@
-<div class="app_cont">
+<div class="template_container">
 
 	<div class="breadcrumb">
 		<a href="/dashboard/#/">Home</a>
-		<span>&nbsp;>&nbsp;</span>
+		<span class="arrow">&nbsp;>&nbsp;</span>
 		<a href="/dashboard/#/teams">Teams</a>
-		<span>&nbsp;>&nbsp;</span>
-		<span>New</span>
+		<span class="arrow">&nbsp;>&nbsp;</span>
+		<span class="ORANGE">New</span>
 	</div>
 
-	<div class="head head-icon-teams">Create A Team</div>
+	<div class="head">
+		<div class="head-item head-icon-teams">Create A Team</div>
+	</div>
 	<div class="body">
 
 		<div class="standard">
@@ -35,25 +37,25 @@
 
 			</div>
 
-			<div class="sep">
+			<!-- <div class="sep">
 
-				<table class="inner">
+				<table class="invite">
 
-					<tr class="inner">
-						<th class="inner">Members:</th>
-						<th class="inner">
-							<input type="text" class="FULL" placeholder="Invite people to your team..." wambl-autocomplete="$parent.users" wambl-exclude="team.invited" wambl-on-select="addTeammate(item)" wambl-on-click="addTeammate(item)" wambl-display-attr="gamertag" wambl-select-first="true" ng:model="teammateAdder" />
+					<tr>
+						<th>Members:</th>
+						<th>
+							<input type="text" class="FULL filter" placeholder="Invite people to your team..." wambl-autocomplete="$parent.users" wambl-exclude="team.invited" wambl-on-select="addTeammate(item)" wambl-on-click="addTeammate(item)" wambl-display-attr="gamertag" wambl-select-first="true" ng:model="teammateAdder" />
 						</th>
 					</tr>
 
-					<tr class="inner" ng:repeat="user in team.invited">
+					<tr ng:repeat="user in team.invited">
 						<td class="inner">{{user.gamertag}}</td>
 						<td class="inner"><a href="" class="remove" ng:click="removeTeammate($index)" ng:if="user.objectId != current_user['objectId']">Remove</a></td>
 					</tr>
 
 				</table>
 
-			</div>
+			</div> -->
 
 			<div class="sep" align="center">
 

@@ -59,15 +59,19 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 				var team = angular.copy($scope.team);
 
 				team.creator = makePointer(team.creator,'_User');
-				team.admins = makeRelation(team.admins,'_User');
-				team.invited = makeRelation(team.invited,'_User');
-				team.confirmed = makeRelation(team.confirmed,'_User');
+				delete team.admins
+				delete team.invited
+				delete team.confirmed
+				// team.admins = makeRelation(team.admins,'_User');
+				// team.invited = makeRelation(team.invited,'_User');
+				// team.confirmed = makeRelation(team.confirmed,'_User');
 
 				var Team = new ApiModel({team: team});
 
 				Team.$create({type: 'teams'},function(data){
 
-					window.location = '/dashboard/#/teams/'+data.call.body.objectId;
+					JP(data);
+					// window.location = '/dashboard/#/teams/'+data.call.body.objectId;
 
 				});
 

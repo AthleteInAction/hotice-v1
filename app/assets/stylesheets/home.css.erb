@@ -22,12 +22,13 @@ table.home tr td div.main_article {
 	position: relative;
 	vertical-align: bottom;
 	padding: 0;
-	margin: 0;
+	margin: 0 0 20px 0;
 	border: none;
 	width: 672px;
 	height: 412px;
 	background: url(<%= asset_path 'hniotourney.png' %>) center center no-repeat;
 	border: solid 1px #50DDE8;
+	border-radius: 6px;
 }
 table.home tr td div.main_article div.tray {
 	width: 672px;
@@ -36,6 +37,9 @@ table.home tr td div.main_article div.tray {
 	bottom: 0;
 	left: 0;
 	border-top: solid 1px #737373;
+	border-top: solid 1px #737373;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
 }
 table.home tr td div.main_article div.tray a.head {
 	display: block;
@@ -156,4 +160,11 @@ table.news tr:nth-child(even) td a {
 table.news tr:last-child td a {
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
+}
+div.date {
+	font-size: 12px;
+	color: #BDBDBD;
+}
+.T20 {
+	margin: 20px 0 0 0 !important;
 }

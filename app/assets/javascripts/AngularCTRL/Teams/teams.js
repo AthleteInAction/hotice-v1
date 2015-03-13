@@ -4,6 +4,7 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 		$scope.params = $routeParams;
 
 		$scope.sort = 'name';
+		$scope.allteams = 'true';
 		$scope.rev = false;
 		$scope.loading = false;
 

@@ -159,16 +159,6 @@ HotIce.directive('scoreboard',['ApiModel','$interval',function(ApiModel,$interva
 	
 			};
 
-			// if (attrs.interval){
-
-			// 	$interval(function(){
-
-			// 		scope.scoreScroll(1);
-
-			// 	},parseInt(attrs.interval)*1000);
-
-			// };
-
 		}
 
 	}
@@ -181,10 +171,11 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
     		wamblAutocomplete: '=',
     		wamblExclude: '=',
     		wamblOnSelect: '&',
-    		wamblOnClick: '&'
+    		wamblOnClick: '&',
+    		ngModel: '='
     	},
-    	require: 'ngModel',
-        link: function(scope,element,attrs,ngModel){
+    	// require: 'ngModel',
+        link: function(scope,element,attrs){
 
         	var template = '<div class="autocomplete"><ul><li ng:if="wamblItems.length == 0"><a href="" ng:click="">{{message}}</a></li><li ng:repeat="item in wamblItems track by $index"><a href="" ng:class="{selected: $index==wamblIndex}" ng:click="clickHandle($index)">{{translate(item)}}</a></li></ul></div>';
         	var el = angular.element(template);
@@ -304,11 +295,13 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 	
         		if (event.which == 38){
 	
-					element.val(element.val());
+					// element.val(element.val());
+					scope.ngModel = scope.ngModel;
 	
         		} else if (event.which == 40){
 	
-        			element.val(element.val());
+        			// element.val(element.val());
+        			scope.ngModel = scope.ngModel;
 	
         		}
 	
@@ -316,7 +309,8 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
         			var d = scope.translate(scope.wamblItems[selectedIndex]);
 
-        			element.val(d);
+        			// element.val(d);
+        			scope.ngModel = d;
         			
         			scope.hideList();
 	
@@ -325,6 +319,10 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
         			scope.wamblItems = [scope.wamblItems[selectedIndex]];
 
         			scope.setOffset();
+
+        			if (attrs.wamblBlankOnSelect == 'true'){
+        				scope.ngModel = null;
+        			}
 	
         		}
 
@@ -336,7 +334,7 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
 			scope.filter = function(){
 
-				var tval = element.val();
+				var tval = scope.ngModel;//element.val();
 
 				if (tval.length != prevLength){
             		scope.setOffset();
@@ -396,7 +394,8 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 
 				var d = scope.translate(scope.wamblItems[i]);
 
-				element.val(d);
+				// element.val(d);
+				scope.ngModel = d;
 
 				scope.hideList();
 
@@ -405,6 +404,10 @@ HotIce.directive('wamblAutocomplete',['$compile',function($compile){
 				scope.wamblItems = [scope.wamblItems[i]];
 
 				selectedIndex = -1;
+
+				if (attrs.wamblBlankOnSelect == 'true'){
+					scope.ngModel = null;
+				}
 
 			};
 

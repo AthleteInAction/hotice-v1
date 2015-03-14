@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :notifications
       resources :online
       resources :events
+      resources :relations
       # TEST STUFF
       resources :test
 

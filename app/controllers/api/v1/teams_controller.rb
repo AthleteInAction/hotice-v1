@@ -16,20 +16,30 @@ module Api
 
   			call_1 = db.APICall path: '/classes/Teams',method: 'POST',payload: params[:team]
 
-        r = {
-          team: {
-            '__type' => 'Pointer',
-            'className' => 'Teams',
-            'objectId' => call_1[:body]['objectId']
-          },
-          user: params[:team][:creator],
-          type: 'team',
-          admin: true
-        }
+        if call_1[:code] == 201
 
-        call_2 = db.APICall path: '/classes/Relations',method: 'POST',payload: r
+          r = {
+            team: {
+              '__type' => 'Pointer',
+              'className' => 'Teams',
+              'objectId' => call_1[:body]['objectId']
+            },
+            user: params[:team][:creator],
+            type: 'team',
+            admin: true
+          }
 
-  			render json: {call_1: call_1,call_2: call_2}
+          call_2 = db.APICall path: '/classes/Relations',method: 'POST',payload: r
+
+          status = call_2[:code]
+
+        else
+
+          status = call_1[:code]
+
+        end
+
+  			render json: {call_1: call_1,call_2: call_2},status: status.to_i
 
   		end
 

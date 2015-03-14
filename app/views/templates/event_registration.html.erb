@@ -10,34 +10,38 @@
 		<span class="ORANGE">Registration</span>
 	</div>
 
-	<div class="name">{{event.title}}</div>
-	<div class="date">{{displayDate(event.start_date.iso).fString}}</div>
-	<div class="reg_date">Registration Deadline:&nbsp;{{displayDate(event.reg_date.iso).fString}}</div>
+	<div class="event-header">
 
-	<div class="record">
-		<input type="text" class="myteams FULL" placeholder="Register one of your teams..." wambl-autocomplete="myTeams" wambl-on-select="registerTeam(item)" wambl-on-click="registerTeam(item)" wambl-display-attr="name" wambl-select-first="false" ng:model="teamadder" wambl-exclude="event.registered" />
-		<div class="article" ng-bind-html="event.article.body"></div>
+		<div class="event-title">{{event.title}}</div>
+		<div class="event-date">Event&nbsp;Date:&nbsp;<span>{{displayDate(event.start_date.iso).fString}}</span></div>
+		<div class="event-deadline">Registration&nbsp;Deadline:&nbsp;<span>{{displayDate(event.reg_date.iso).fString}}</span></div>
+
 	</div>
 
-	<div class="template_container">
+	<div class="template_container T20">
 
 		<div class="head">
-			<div class="head-item head-icon-teams">Registered Teams</div>
+			<div class="head-item head-icon-teams">Register Your Team</div>
+			<div class="head-item">
+				<input type="text" placeholder="Filter..." class="filter" ng:model="teamFilter" ng:change="filterTeams(teamFilter)" />
+			</div>
 		</div>
-		<div class="body NO_PAD">
 
-			<table class="teams_table">
+		<div class="body">
 
-				<tr ng:if="!regLoaded">
-					<td>Loading...</td>
+			<table class="table">
+
+				<tr>
+					<th colspan="2">Team Name</th>
 				</tr>
 
-				<tr ng:if="event.registered == 0 && regLoaded">
-					<td>No teams registered</td>
-				</tr>
-	
-				<tr ng:repeat="team in event.registered | orderBy:'name'" ng:click="linkTo('/dashboard/#/teams/'+team.objectId)">
-					<td>{{team.name}}</td>
+				<tr ng:repeat="team in displayTeams | orderBy:'name'">
+					<td>
+						<a href="/dashboard/#/teams/{{team.objectId}}" ng:click="">{{team.name}}</a>
+					</td>
+					<td>
+						<button ng:click="registerTeam($index)">Register</button>
+					</td>
 				</tr>
 
 			</table>

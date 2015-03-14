@@ -21,6 +21,7 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 			ApiModel.query(this.options,function(data){
 
 				$scope.teams = data.body.results;
+				
 				$scope.loading = false;
 
 			});
@@ -28,12 +29,6 @@ var TeamsCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 		};
 
 		$scope.getTeams();
-
-		$scope.teamLink = function(id){
-
-			window.location = '/dashboard/#/teams/'+id
-
-		};
 
 		$scope.teamSort = function(){
 

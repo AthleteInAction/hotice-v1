@@ -4,11 +4,28 @@ module Api
 
   		def index
 
-  			call = db.APICall path: '/classes/Relations',where: {type: 'team'}.to_json,include: 'team,user'
+  			call = db.APICall path: '/classes/Teams'
 
   			render json: call
 
   		end
+
+      def myteams
+
+        c = {
+          user: {
+            '__type' => 'Pointer',
+            'className' => '_User',
+            'objectId' => session[:user]['objectId']
+          },
+          type: 'team'
+        }
+
+        call = db.APICall path: '/classes/Relations',where: c.to_json,include: 'team'
+
+        render json: call
+
+      end
 
   		def create
 

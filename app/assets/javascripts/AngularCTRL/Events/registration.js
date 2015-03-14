@@ -4,7 +4,7 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 		$scope.params = $routeParams;
 
 		$scope.myTeams = [];
-		$scope.regLoaded = false;
+		$scope.displayTeams = [];
 
 		$scope.getEvent = function(){
 
@@ -16,100 +16,98 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 			ApiModel.query(this.options,function(data){
 
 				$scope.event = data.body.results[0];
-				$scope.event.registered = [];
-				$scope.event.confirmed = [];
-				if ($scope.event.articleId){$scope.getArticle();}
-				$scope.getRegistered();
 
 			});
 
 		};
 		$scope.getEvent();
 
-		$scope.getArticle = function(){
-
-			this.options = {
-				type: 'zendesk',
-				sub: 'articles',
-				id: $scope.event.articleId
-			};
-
-			ApiModel.query(this.options,function(data){
-
-				JP('ARTICLE');
-				$scope.event.article = data.body.article;
-
-			});
-
-		};
-
 		$scope.getMyTeams = function(){
 
 			this.options = {
-				type: 'teams',
-				constraints: '{"admins":{"__type":"Pointer","className":"_User","objectId":"'+current_user['objectId']+'"}}'
+				type: 'myteams'
 			};
+
+			var temp = {};
+			var teams = [];
 
 			ApiModel.query(this.options,function(data){
 
-				$scope.myTeams = data.body.results;
+				$.each(data.body.results,function(key,val){
+
+					temp[val.team.objectId] = val.team;
+
+				});
+
+				$.each(temp,function(key,val){
+
+					teams.push(val);
+
+				});
+
+				$scope.myTeams = teams;
+				$scope.displayTeams = teams;
 
 			});
 
 		};
 		$scope.getMyTeams();
 
-		$scope.getRegistered = function(){
+		$scope.filterTeams = function(text){
 
-			this.options = {
-				type: 'teams',
-				constraints: '{"$relatedTo":{"object":{"__type":"Pointer","className":"Events","objectId":"'+$scope.event.objectId+'"},"key":"registered"}}'
-			}
+			var temp = [];
 
-			ApiModel.query(this.options,function(data){
+			$.each($scope.myTeams,function(key,val){
 
-				$scope.event.registered = data.body.results;
-				$scope.regLoaded = true;
+				if (val.name.toLowerCase().search(text.toLowerCase()) != -1){
+
+					temp.push(val);
+
+				}
 
 			});
 
+			$scope.displayTeams = temp;
+
 		};
 
-		$scope.registerTeam = function(item){
+		$scope.registerTeam = function(i){
 
-			var message = 'By registering for this tournament, '+item.name+' agrees to the following:\n\n1: To show up to all event related activities\n\n2: Be on time to all event related activities\n\n3: Abide by all rules set by the event admin\n\nYou may always un-register befored the registration deadline.';
+			var team = $scope.displayTeams[i];
+			JP(team);
 
-			if (confirm(message)){
+			this.options = {
+				type: 'relations'
+			};
 
-				this.options = {
-					type: 'events',
-					id: $scope.params.id
-				};
-	
-				var eventA = angular.copy($scope.event);
-	
-				eventA.registered = {
-					__op: 'AddRelation',
-					objects: [
-						{
-							__type: 'Pointer',
-							className: 'Teams',
-							objectId: item.objectId
-						}
-					]
+			var r = {
+				relation: {
+					type: 'event',
+					team: {
+						__type: 'Pointer',
+						className: 'Teams',
+						objectId: team.objectId
+					},
+					user: {
+						__type: 'Pointer',
+						className: '_User',
+						objectId: current_user.objectId	
+					},
+					event: {
+						__type: 'Pointer',
+						className: 'Events',
+						objectId: $scope.params.id
+					}
 				}
-	
-				var Register = new ApiModel({event: eventA});
-	
-				Register.$save(this.options,function(data){
-					
-					$scope.event.registered.push(item);
-	
-				});
-
 			}
 
-			$scope.teamadder = null;
+			var Relation = new ApiModel(r);
+
+			Relation.$create(this.options,function(data){
+
+				JP(data);
+
+			});
 
 		};
 

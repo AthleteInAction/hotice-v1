@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         
     	resources :users
     	resources :teams
+      get 'myteams',to: 'teams#myteams'
       resources :notifications
       resources :online
       resources :events

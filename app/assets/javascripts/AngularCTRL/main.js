@@ -158,7 +158,7 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 
 			obj.sDay = (M+1)+'/'+D+'/'+Y;
 			obj.sDate = obj.sDay+' '+time;
-			obj.fString = days[dotw].long+' '+months[M].long+', '+D+', '+Y+' '+time;
+			obj.fString = days[dotw].long+' '+months[M].long+', '+D+', '+Y+' '+time;//+' '+date.getTimezoneOffset();
 
 			return obj;
 

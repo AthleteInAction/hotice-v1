@@ -43,6 +43,10 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		$scope.inviteMember = function(user){
 
+			if (!confirm('Are you sure you wish to invite '+user.gamertag+'?')){
+				return false;
+			}
+
 			this.options = {
 				type: 'relations'
 			};
@@ -98,18 +102,31 @@ var TeamsShowCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 		};
 
-		$scope.addMember = function(user){
+		$scope.addMember = function(i){
+
+			var user = angular.copy($scope.members[i]);
 
 			this.options = {
 				type: 'relations',
 				id: user.relationId
 			};
 
-			var Relation = new ApiModel({relation: {}});
+			var Relation = new ApiModel({relation: {status: 'accepted'}});
+
+			Relation.$save(this.options,function(data){
+
+				$scope.members[i].status = 'accepted';
+				$scope.userFilter = 'accepted';
+
+			});
 
 		};
 
 		$scope.removeMember = function(user){
+
+			if (!confirm('Are you sure you wish to remove '+user.gamertag+'?')){
+				return false;
+			}
 
 			this.options = {
 				type: 'relations',

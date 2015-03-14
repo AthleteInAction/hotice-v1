@@ -28,7 +28,7 @@
 		<table class="table">
 
 			<tr>
-				<th>Team</th>
+				<th>Name</th>
 				<th>Wins</th>
 				<th>Losses</th>
 				<th>OTL</th>
@@ -48,17 +48,17 @@
 				<td></td>
 			</tr>
 
-			<tr ng:repeat="team in teams | orderBy:sort:rev" ng:click="linkTo('/dashboard/#/teams/'+team.objectId)">
+			<tr ng:repeat="team in teams | orderBy:sort:rev">
 				<td>
-					<a href="/dashboard/#/teams/{{team.team.objectId}}">{{team.team.name}}</a></td>
+					<a href="/dashboard/#/teams/{{team.objectId}}">{{team.name}}</a></td>
 				<td>
-					{{team.team.wins}}
+					{{team.wins}}
 				</td>
 				<td>
-					{{team.team.losses}}
+					{{team.losses}}
 				</td>
 				<td>
-					{{team.team.otl}}
+					{{team.otl}}
 				</td>
 			</tr>
 

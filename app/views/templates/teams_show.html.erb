@@ -75,7 +75,7 @@
 					</td>
 					<!-- ACCEPT -->
 					<td ng:if="i_am_admin && userFilter == 'requested'">
-						<a href="" ng:click="addMember(user)" class="accept" ng:if="user.objectId != current_user.objectId">Accept</a>
+						<a href="" ng:click="addMember($index)" class="accept" ng:if="user.objectId != current_user.objectId">Accept</a>
 					</td>
 					<!-- REMOVE -->
 					<td ng:if="i_am_admin">

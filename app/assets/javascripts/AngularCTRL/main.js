@@ -47,27 +47,27 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 		// 	},20000);
 		// }
 
-		// $scope.getUsers = function(complete){
+		$scope.getUsers = function(complete){
 
-		// 	this.options = {
-		// 		type: 'users'
-		// 	};
+			this.options = {
+				type: 'users'
+			};
 
-		// 	ApiModel.query(this.options,function(data){
+			ApiModel.query(this.options,function(data){
 
-		// 		$scope.users = data.body.results;
-		// 		$scope.users.removeWhere('objectId',current_user.objectId);
+				$scope.users = data.body.results;
+				$scope.users.removeWhere('objectId',current_user.objectId);
 
-		// 		complete(data.body.results);
+				complete(data.body.results);
 
-		// 	});
+			});
 
-		// };
-		// $scope.getUsers(function(users){
+		};
+		$scope.getUsers(function(users){
 			
-		// 	$scope.users = users;
+			$scope.users = users;
 
-		// });
+		});
 
 
 		// $scope.getNotifications = function(complete){

@@ -15,7 +15,6 @@
 //= require ../AngularJS/angular
 //= require ../AngularJS/angular-resource
 //= require ../AngularJS/angular-ui
-//= require ../AngularJS/angular-route
 //= require_tree ../AngularCTRL
 //= require ../zendesk/widget
 var HotIce;

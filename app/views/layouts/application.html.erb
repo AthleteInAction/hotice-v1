@@ -5,6 +5,7 @@
   <script>var current_user = <%= session[:user].to_json.html_safe %>;</script>
   <%= stylesheet_link_tag    'application/application', media: 'all' %>
   <%= javascript_include_tag 'application/application' %>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-route.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body ng:App="HotIce" ng:controller="MainCtrl">

@@ -1,5 +1,5 @@
-var MainCtrl = ['$scope','$routeParams','$location','$timeout','$interval',
-	function($scope,$routeParams,$location,$timeout,$interval){
+var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$interval',
+	function($scope,$routeParams,$location,ApiModel,$timeout,$interval){
 
 		JP('MAIN');
 		$scope.current_user = current_user;

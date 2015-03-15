@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require ../AngularJS/angular
-//= require ../AngularJS/angular-resource
-//= require ../AngularJS/angular-ui
-//= require ../AngularJS/angular-route
-//= require_tree ../AngularCTRL
-//= require ../zendesk/widget
+//= require AngularJS/angular
+//= require AngularJS/angular-resource
+//= require AngularJS/angular-ui
+//= require AngularJS/angular-route
+//= require_directory ./AngularCTRL
+//= require zendesk/widget
 var HotIce;
 HotIce = angular.module('HotIce',['ngRoute','ngResource']);
 HotIce.value('$anchorScroll',angular.noop);

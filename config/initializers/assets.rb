@@ -8,4 +8,4 @@ Rails.application.config.assets.version = '2.1'
 Rails.application.config.assets.precompile += %w( splash/splash.css )
 Rails.application.config.assets.precompile += %w( splash/splash.js )
 Rails.application.config.assets.precompile += %w( application/application.css )
-Rails.application.config.assets.precompile += %w( application/application.js )
+# Rails.application.config.assets.precompile += %w( application/application.js )

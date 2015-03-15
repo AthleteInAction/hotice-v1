@@ -13,8 +13,19 @@
 	<div class="event-header">
 
 		<div class="event-title">{{event.title}}</div>
-		<div class="event-date">Event&nbsp;Date:&nbsp;<span>{{displayDate(event.start_date.iso).fString}}</span></div>
-		<div class="event-deadline">Registration&nbsp;Deadline:&nbsp;<span>{{displayDate(event.reg_date.iso).fString}}</span></div>
+		<table>
+			<tr class="event-date">
+				<td colspan="2">
+					<span>{{displayDate(event.start_date.iso).fString}}</span>
+				</td>
+			</tr>
+			<tr class="event-deadline">
+				<td>Registration&nbsp;Deadline:&nbsp;</td>
+				<td>
+					<span>{{displayDate(event.reg_date.iso).fString}}</span>
+				</td>
+			</tr>
+		</table>
 
 	</div>
 
@@ -32,7 +43,7 @@
 			<table class="table">
 
 				<tr>
-					<th colspan="2">Team Name</th>
+					<th colspan="2">My Teams</th>
 				</tr>
 
 				<tr ng:repeat="team in displayTeams | orderBy:'name'">
@@ -40,7 +51,8 @@
 						<a href="/dashboard/#/teams/{{team.objectId}}" ng:click="">{{team.name}}</a>
 					</td>
 					<td>
-						<button ng:click="registerTeam($index)">Register</button>
+						<button ng:click="registerTeam($index)" ng:if="!team.registered">Register</button>
+						<button ng:click="unregisterTeam($index)" ng:if="team.registered">Remove</button>
 					</td>
 				</tr>
 

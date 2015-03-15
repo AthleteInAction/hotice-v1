@@ -51,7 +51,7 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 			if ($scope.validate()){
 
-				$scope.submitting = true;
+				$scope.$parent.loading = true;
 
 				var team = angular.copy($scope.team);
 
@@ -61,7 +61,12 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 				Team.$create({type: 'teams'},function(data){
 
+					$scope.$parent.loading = false;
 					window.location = '/dashboard/#/teams/'+data.call_1.body.objectId;
+
+				},function(){
+
+					$scope.$parent.loading = false;
 
 				});
 
@@ -75,23 +80,24 @@ var TeamsNewCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout',
 
 				this.options = {
 					type: 'teams',
-					constraints: '{"name_i":"'+$scope.team.name.toLowerCase()+'"}'
+					constraints: '{"name_i":"'+$scope.team.name.toLowerCase()+'"}',
+					count: 1,
+					limit: 0
 				};
 
 				ApiModel.query(this.options,function(data){
 
-					if (data.code == 200){
+					JP('CHECK');
+					JP(data);
 
-						if (data.body.results.length > 0){
+					if (data.body.count > 0){
 
-							$scope.errors.name.message = '"'+$scope.team.name+'" has been taken.';
+						$scope.errors.name.message = '"'+$scope.team.name+'" has been taken.';
 
-						} else {
+					} else {
 
-							$scope.errors.name.message = null;
-							$scope.errors.name.valid = true;
-
-						}
+						$scope.errors.name.message = null;
+						$scope.errors.name.valid = true;
 
 					}
 

@@ -4,7 +4,9 @@ module Api
 
   		def index
 
-        render json: params
+        call = db.APICall method: 'GET',path: '/classes/Relations',where: params[:constraints] || {}.to_json,include: params[:include] || ''
+
+        render json: call
 
       end
 

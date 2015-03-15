@@ -3,55 +3,62 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 		$scope.params = $routeParams;
 
+		$scope.registeredTeams = {};
 		$scope.myTeams = [];
 		$scope.displayTeams = [];
 
-		$scope.getEvent = function(){
+		$scope.getData = function(){
 
 			this.options = {
-				type: 'events',
-				id: $scope.params.id
-			}
-
-			ApiModel.query(this.options,function(data){
-
-				$scope.event = data.body.results[0];
-
-			});
-
-		};
-		$scope.getEvent();
-
-		$scope.getMyTeams = function(){
-
-			this.options = {
-				type: 'myteams'
+				type: 'relations',
+				constraints: '{"$or":[{"event":{"__type": "Pointer","className": "Events","objectId": "'+$scope.params.id+'"},"type": "event"},{"user": {"__type": "Pointer","className": "_User","objectId": "'+current_user.objectId+'"},"type": "team"}]}',
+				include: 'team,user,event'
 			};
 
-			var temp = {};
-			var teams = [];
-
 			ApiModel.query(this.options,function(data){
+
+				var e = false;
 
 				$.each(data.body.results,function(key,val){
 
-					temp[val.team.objectId] = val.team;
+					// Get Event
+					if (val.event && !e){
+						$scope.event = val.event;
+						e = true;
+					}
+
+					// Get Registered Teams
+					if (val.type == 'event' && val.status != 'blank'){
+						$scope.registeredTeams[val.team.objectId] = val.objectId;
+					}
 
 				});
 
-				$.each(temp,function(key,val){
+				// Determine if registered
+				$.each(data.body.results,function(key,val){
 
-					teams.push(val);
+					// Get My Teams
+					if (val.type == 'team'){
+
+						if ($scope.registeredTeams[val.team.objectId]){
+							val.team.relationId = $scope.registeredTeams[val.team.objectId];
+							val.team.registered = true;
+						} else {
+							val.team.relationId = null;
+							val.team.registered = false;
+						}
+
+						$scope.myTeams.push(val.team);
+					}
 
 				});
 
-				$scope.myTeams = teams;
-				$scope.displayTeams = teams;
+				$scope.displayTeams = $scope.myTeams;
 
 			});
 
 		};
-		$scope.getMyTeams();
+		$scope.getData();
 
 		$scope.filterTeams = function(text){
 
@@ -73,8 +80,9 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 		$scope.registerTeam = function(i){
 
+			$scope.$parent.loading = true;
+
 			var team = $scope.displayTeams[i];
-			JP(team);
 
 			this.options = {
 				type: 'relations'
@@ -105,7 +113,38 @@ var EventRegistrationCtrl = ['$scope','$routeParams','$location','ApiModel','$ti
 
 			Relation.$create(this.options,function(data){
 
-				JP(data);
+				$scope.displayTeams[i].registered = true;
+				$scope.displayTeams[i].relationId = data.body.objectId;
+				$scope.$parent.loading = false;
+
+			},function(){
+
+				$scope.$parent.loading = false;
+
+			});
+
+		};
+
+		$scope.unregisterTeam = function(i){
+
+			$scope.$parent.loading = true;
+
+			var team = $scope.displayTeams[i];
+
+			this.options = {
+				type: 'relations',
+				id: team.relationId
+			};
+
+			ApiModel.destroy(this.options,function(data){
+
+				$scope.displayTeams[i].registered = false;
+				$scope.displayTeams[i].relationId = null;
+				$scope.$parent.loading = false;
+
+			},function(data){
+
+				$scope.$parent.loading = false;
 
 			});
 

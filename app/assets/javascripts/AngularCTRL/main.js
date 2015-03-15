@@ -1,14 +1,17 @@
 var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$interval',
 	function($scope,$routeParams,$location,ApiModel,$timeout,$interval){
 
+		JP('MAIN');
 		$scope.current_user = current_user;
 		$scope.announcements = [];
+		$scope.loading = false;
+		// $scope.Prefix = Prefix;
 
-		$scope.$on('$routeChangeSuccess',function (event,current,previous,rejection){
+		// $scope.$on('$routeChangeSuccess',function (event,current,previous,rejection){
 
 
 			
-		});
+		// });
 
 		zE(function(){
 			var zduser = {

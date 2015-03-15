@@ -4,7 +4,15 @@ module Api
 
   		def index
 
-  			call = db.APICall path: '/classes/Teams'
+        setup = {
+          path: '/classes/Teams'
+        }
+
+        setup[:where] = params[:constraints] if params[:constraints]
+        setup[:count] = params[:count] if params[:count]
+        setup[:limit] = params[:limit] if params[:limit]
+
+  			call = db.APICall setup
 
   			render json: call
 
@@ -43,7 +51,8 @@ module Api
             },
             user: params[:team][:creator],
             type: 'team',
-            admin: true
+            admin: true,
+            status: 'accepted'
           }
 
           call_2 = db.APICall path: '/classes/Relations',method: 'POST',payload: r

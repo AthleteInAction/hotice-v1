@@ -4,17 +4,48 @@ module Api
 
   		def index
 
-  			test = {
-  				team: {
-  					'__type' => 'Pointer',
-  					'className' => 'Teams',
-  					'objectId' => 'wmEe1BrJjy'
-  				}
-  			}
+        test = {
+          '$or' => [
 
-  			call = db.APICall path: '/classes/Admins',where: test.to_json,include: 'team,user'
+            {
+              user: {
+                '__type' => 'Pointer',
+                'className' => '_User',
+                'objectId' => 'sajlUe2o1I'
+              },
+              type: 'team'
+            },
 
-        	render json: call
+            {
+              event: {
+                '__type' => 'Pointer',
+                'className' => 'Events',
+                'objectId' => 'QbpXiJZ7c4'
+              },
+              type: 'event'
+            }
+
+          ]
+        }
+
+  			test1 = {
+          event: {
+            '$in' => [
+              {
+                '__type' => 'Pointer',
+                'className' => 'Events',
+                'objectId' => 'QbpXiJZ7c4'
+              }
+            ]
+          },
+          type: {
+            '$in' => ['event','team']
+          }
+        }
+
+  			call = db.APICall path: '/classes/Relations',where: test.to_json,include: 'team,user'
+
+        render json: call
 
       end
 

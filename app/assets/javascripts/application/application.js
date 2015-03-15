@@ -67,25 +67,25 @@ HotIce.config(function($routeProvider){
 // Events Model
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
-// HotIce.factory('ApiModel',[
-// 	'$resource',function($resource){
-// 		return $resource("/api/v1/:type/:sub/:id/:extend/:second.json",
-// 			{
-// 				id: '@id',
-// 				extend: '@extend',
-// 				second: '@second',
-// 				sub: '@sub'
-// 			},
-// 			{
-// 				get: {method: 'GET'},
-// 				query: {method: 'GET'},
-// 				create: {method: 'POST'},
-// 				save: {method: 'PUT'},
-// 				destroy: {method: 'DELETE'}
-// 			}
-// 		);
-// 	}
-// ]);
+HotIce.factory('ApiModel',[
+	'$resource',function($resource){
+		return $resource("/api/v1/:type/:sub/:id/:extend/:second.json",
+			{
+				id: '@id',
+				extend: '@extend',
+				second: '@second',
+				sub: '@sub'
+			},
+			{
+				get: {method: 'GET'},
+				query: {method: 'GET'},
+				create: {method: 'POST'},
+				save: {method: 'PUT'},
+				destroy: {method: 'DELETE'}
+			}
+		);
+	}
+]);
 HotIce.config(['$httpProvider',function($httpProvider){
 		$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 	}

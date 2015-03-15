@@ -21,13 +21,13 @@
 var HotIce;
 HotIce = angular.module('HotIce',['ngRoute','ngResource']);
 HotIce.value('$anchorScroll',angular.noop);
-HotIce.config(function($routeProvider){
+HotIce.config(function($locationProvider,$routeProvider){
 	
 	// html5Mode: true;
 
 	$routeProvider.when('/home',{
-		templateUrl : '/angularjs/templates/home.html',
-		controller: HomeCtrl
+		// templateUrl : '/angularjs/templates/home.html',
+		// controller: HomeCtrl
 	});
 	
 });

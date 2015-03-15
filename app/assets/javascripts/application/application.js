@@ -12,19 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require AngularJS/angular
-//= require AngularJS/angular-resource
-//= require AngularJS/angular-ui
-//= require AngularJS/angular-route
-//= require_directory ./AngularCTRL
+//= require ../AngularJS/angular
+//= require ../AngularJS/angular-resource
+//= require ../AngularJS/angular-ui
+//= require ../AngularJS/angular-route
+//= require_tree ../AngularCTRL
 //= require_tree .
 var HotIce;
-HotIce = angular.module('HotIce',['ngRoute','ngResource','ui','ngSanitize']);
+HotIce = angular.module('HotIce',['ngRoute','ngResource','ui']);
 HotIce.value('$anchorScroll',angular.noop);
-HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
+HotIce.config(function($routeProvider){
 	
-	html5Mode: true;
+	// html5Mode: true;
 
 	$routeProvider.when('/home',{
 		templateUrl : '/angularjs/templates/home.html',
@@ -62,7 +61,7 @@ HotIce.config(['$routeProvider','$locationProvider',function($routeProvider,$loc
 		redirectTo: '/home'
 	});
 	
-}]);
+});
 
 
 // Events Model

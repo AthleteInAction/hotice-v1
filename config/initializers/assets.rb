@@ -6,4 +6,6 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w( splash/splash.css )
+Rails.application.config.assets.precompile += %w( splash/splash.js )
 Rails.application.config.assets.precompile += %w( application/application.css )
+Rails.application.config.assets.precompile += %w( application/application.js )

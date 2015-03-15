@@ -3,6 +3,8 @@
 <head>
   <title>Hotice</title>
   <script>var current_user = <%= session[:user].to_json.html_safe %>;</script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.js"></script>
   <%= stylesheet_link_tag    'application/application', media: 'all' %>
   <%= javascript_include_tag 'application/application' %>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-route.js"></script>

@@ -15,47 +15,47 @@
 //= require_tree ../AngularCTRL
 //= require ../zendesk/widget
 var HotIce;
-HotIce = angular.module('HotIce',['ngRoute','ngResource']);
+HotIce = angular.module('HotIce',['ngRoute']);
 HotIce.value('$anchorScroll',angular.noop);
 HotIce.config(function($routeProvider){
 	
 	// html5Mode: true;
 
-	$routeProvider.when('/home',{
-		templateUrl : '/angularjs/templates/home.html',
-		controller: HomeCtrl
-	}).when('/teams/new',{
-		templateUrl : '/angularjs/templates/teams_new.html',
-		controller: TeamsNewCtrl
-	}).when('/teams/:id',{
-		templateUrl : '/angularjs/templates/teams_show.html',
-		controller: TeamsShowCtrl
-	}).when('/teams',{
-		templateUrl : '/angularjs/templates/teams.html',
-		controller: TeamsCtrl
-	}).when('/myteams',{
-		templateUrl : '/angularjs/templates/teams.html',
-		controller: TeamsCtrl
-	}).when('/events/:id/registration',{
-		templateUrl : '/angularjs/templates/event_registration.html',
-		controller: EventRegistrationCtrl
-	}).when('/members',{
-		templateUrl : '/angularjs/templates/members.html',
-		controller: MembersCtrl
-	}).when('/eashl/search',{
-		templateUrl : '/angularjs/templates/eashl_search.html'
-	}).when('/articles',{
-		templateUrl : '/angularjs/templates/articles.html',
-		controller: ArticlesCtrl
-	}).when('/articles/:id',{
-		templateUrl : '/angularjs/templates/articles_show.html',
-		controller: ArticlesShowCtrl
-	}).when('/myaccount',{
-		templateUrl : '/angularjs/templates/myaccount.html',
-		controller: MyAccountCtrl
-	}).otherwise({
-		redirectTo: '/home'
-	});
+	// $routeProvider.when('/home',{
+	// 	templateUrl : '/angularjs/templates/home.html',
+	// 	controller: HomeCtrl
+	// }).when('/teams/new',{
+	// 	templateUrl : '/angularjs/templates/teams_new.html',
+	// 	controller: TeamsNewCtrl
+	// }).when('/teams/:id',{
+	// 	templateUrl : '/angularjs/templates/teams_show.html',
+	// 	controller: TeamsShowCtrl
+	// }).when('/teams',{
+	// 	templateUrl : '/angularjs/templates/teams.html',
+	// 	controller: TeamsCtrl
+	// }).when('/myteams',{
+	// 	templateUrl : '/angularjs/templates/teams.html',
+	// 	controller: TeamsCtrl
+	// }).when('/events/:id/registration',{
+	// 	templateUrl : '/angularjs/templates/event_registration.html',
+	// 	controller: EventRegistrationCtrl
+	// }).when('/members',{
+	// 	templateUrl : '/angularjs/templates/members.html',
+	// 	controller: MembersCtrl
+	// }).when('/eashl/search',{
+	// 	templateUrl : '/angularjs/templates/eashl_search.html'
+	// }).when('/articles',{
+	// 	templateUrl : '/angularjs/templates/articles.html',
+	// 	controller: ArticlesCtrl
+	// }).when('/articles/:id',{
+	// 	templateUrl : '/angularjs/templates/articles_show.html',
+	// 	controller: ArticlesShowCtrl
+	// }).when('/myaccount',{
+	// 	templateUrl : '/angularjs/templates/myaccount.html',
+	// 	controller: MyAccountCtrl
+	// }).otherwise({
+	// 	redirectTo: '/home'
+	// });
 	
 });
 
@@ -63,25 +63,25 @@ HotIce.config(function($routeProvider){
 // Events Model
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 // -:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
-HotIce.factory('ApiModel',[
-	'$resource',function($resource){
-		return $resource("/api/v1/:type/:sub/:id/:extend/:second.json",
-			{
-				id: '@id',
-				extend: '@extend',
-				second: '@second',
-				sub: '@sub'
-			},
-			{
-				get: {method: 'GET'},
-				query: {method: 'GET'},
-				create: {method: 'POST'},
-				save: {method: 'PUT'},
-				destroy: {method: 'DELETE'}
-			}
-		);
-	}
-]);
+// HotIce.factory('ApiModel',[
+// 	'$resource',function($resource){
+// 		return $resource("/api/v1/:type/:sub/:id/:extend/:second.json",
+// 			{
+// 				id: '@id',
+// 				extend: '@extend',
+// 				second: '@second',
+// 				sub: '@sub'
+// 			},
+// 			{
+// 				get: {method: 'GET'},
+// 				query: {method: 'GET'},
+// 				create: {method: 'POST'},
+// 				save: {method: 'PUT'},
+// 				destroy: {method: 'DELETE'}
+// 			}
+// 		);
+// 	}
+// ]);
 HotIce.config(['$httpProvider',function($httpProvider){
 		$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 	}

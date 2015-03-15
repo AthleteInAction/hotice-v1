@@ -49,6 +49,8 @@ var MainCtrl = ['$scope','$routeParams','$location','ApiModel','$timeout','$inte
 
 		$scope.getUsers = function(complete){
 
+			JP('GET USERS');
+
 			this.options = {
 				type: 'users'
 			};

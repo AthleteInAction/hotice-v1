@@ -3,8 +3,8 @@
 <head>
   <title>Hotice</title>
   <script>var current_user = <%= session[:user].to_json.html_safe %>;</script>
-  <%= stylesheet_link_tag    'application/application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application/application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application/application', media: 'all' %>
+  <%= javascript_include_tag 'application/application' %>
   <%= csrf_meta_tags %>
 </head>
 <body ng:App="HotIce" ng:controller="MainCtrl">
